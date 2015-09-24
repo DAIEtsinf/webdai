@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="main-box">
+    <div class="container">
+      <div class="inside">
+        <h2>{{entrada.titulo}}</h2>
+        {% autoescape off %}
+        <p>{{ entrada.noticia }}</p>
+        {% endautoescape %}
+        <h4>{{ entrada.fecha }}</h4>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
