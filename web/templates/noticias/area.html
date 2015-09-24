@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="main-box">
+    <div class="container">
+      <div class="inside">
+        <!-- .news -->
+            <ul class="news">
+              {% for entrada in entradas %}
+                <li>
+                  <figure><strong>{{ entrada.fecha|date:"t" }}</strong>{{ entrada.fecha|date:"M" }}</figure>
+                  <a href="{% url 'entrada' entrada.id %}"><h3>{{ entrada.titulo}}</h3>
+                  {% autoescape off %}
+                    {{ entrada.resumen }}
+                  {% endautoescape %}</a>
+
+                </li>
+
+              {% endfor %}
+            </ul>
+            <!-- /.news -->
+      </div>
+    </div>
+  </div>
+{% endblock content %}

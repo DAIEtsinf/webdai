@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-box">
+    <div>
+        <h2>Perfil de usuario</h2>
+    </div>
+    Hola de nuevo {{ user.username }}<br>
+
+    <div>
+        <img src="{{ MEDIA_URL }}{{ user.userprofile.photo }}" alt="Imagen de {{ user.username }}"/>
+    </div>
+</div>
+{% endblock content %}

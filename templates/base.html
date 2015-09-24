@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% static "web/images/" as url %}
+<html lang="en">
+<head>
+
+  <title>Home - Home Page | Design Company - Free Website Template from Templatemonster.com</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{% static 'web/css/reset.css' %}" type="text/css" media="all">
+  <link rel="stylesheet" href="{% static 'web/css/style.css' %}" type="text/css" media="all">
+  <script type="text/javascript" src="{% static 'web/js/jquery-1.4.2.min.js' %}" ></script>
+  <script type="text/javascript" src="{% static 'web/js/cufon-yui.js' %}"></script>
+  <script type="text/javascript" src="{% static 'web/js/Humanst521_BT_400.font.js' %}"></script>
+  <script type="text/javascript" src="{% static 'web/js/Humanst521_Lt_BT_400.font.js' %}"></script>
+	<script type="text/javascript" src="{% static 'web/js/roundabout.js' %}"></script>
+  <script type="text/javascript" src="{% static 'web/js/roundabout_shapes.js' %}"></script>
+  <script type="text/javascript" src="{% static 'web/js/gallery_init.js' %}"></script>
+  <script type="text/javascript" src="{% static 'web/js/cufon-replace.js' %}"></script>
+  <!--[if lt IE 7]>
+  	<link rel="stylesheet" href="{% static 'web/css/ie/ie6.css' %}" type="text/css" media="all">
+  <![endif]-->
+  <!--[if lt IE 9]>
+  	<script type="text/javascript" src="{% static 'web/js/html5.js' %}"></script>
+    <script type="text/javascript" src="{% static 'web/js/IE9.js' %}"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <!-- header -->
+  {% block header %}
+  <header>
+    <div class="container">
+    	<h1><a href="{% url 'index' %}">DAI</a></h1>
+      <nav>
+        <ul>
+          <li><a href="{% url 'index' %}" class="current">Home</a></li>
+          <li><a href="about.html">Infórmate</a></li>
+          <li><a href="http://www.pisado.es/pisado/">Pisados</a></li>
+          <li><a href="https://www.dropbox.com/sh/m1slr3t6xyizzg2/AABAOQfgLFwMcYB3PBXh7pyca?dl=0">Exámenes</a></li>
+          <li><a href="contacts.html">FAQ</a></li>
+          <li><a href="sitemap.html">Contact</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'accounts.logout' %}">Logout</a></li>
+            <li><a href="{% url 'accounts.panel' %}">{{ user }}</a></li>
+          {% else %}
+            <li><a href="{% url 'accounts.login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+	</header>
+  {% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+  <!-- footer -->
+  <footer>
+    <div class="container">
+    	<div class="wrapper">
+        <div class="fleft">Copyright - Type in your name here</div>
+        <div class="fright"><a rel="nofollow" href="http://www.templatemonster.com/" target="_blank">Website template</a> designed by TemplateMonster.com&nbsp; &nbsp; |&nbsp; &nbsp; <a href="http://templates.com/product/3d-models/" target="_blank">3D Models</a> provided by Templates.com</div>
+      </div>
+    </div>
+  </footer>
+  <script type="text/javascript"> Cufon.now(); </script>
+</body>
+</html>
+{% endblock %}
