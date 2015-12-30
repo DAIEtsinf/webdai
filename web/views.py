@@ -19,6 +19,24 @@ def index(request):
     })
     return HttpResponse(template.render(context))
 
+def about(request):
+    # TODO
+    # sobran datos
+    lista_ultimas_entradas = Entrada.objects.order_by('-fecha')[:4]
+    areas = Area.objects.all()
+    template = loader.get_template('noticias/about.html')
+    context = RequestContext(request, {
+        'lista_ultimas_entradas': lista_ultimas_entradas,
+        'areas': areas,
+    })
+    return HttpResponse(template.render(context))
+
+def politica_privacidad(request):
+    # TODO
+    template = loader.get_template('noticias/politica_privacidad.html')
+    context = RequestContext(request, {})
+    return HttpResponse(template.render(context))
+
 def entrada(request, entrada_id):
     try:
         entrada = Entrada.objects.get(id=entrada_id)

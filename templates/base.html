@@ -8,11 +8,13 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="{% static 'web/css/reset.css' %}" type="text/css" media="all">
   <link rel="stylesheet" href="{% static 'web/css/style.css' %}" type="text/css" media="all">
+  <link rel="stylesheet" href="{% static 'web/css/cookiesStyle.css' %}" type="text/css" media="all">
+  <script type="text/javascript" src="{% static 'web/js/cookies.js' %}" ></script>
   <script type="text/javascript" src="{% static 'web/js/jquery-1.4.2.min.js' %}" ></script>
   <script type="text/javascript" src="{% static 'web/js/cufon-yui.js' %}"></script>
   <script type="text/javascript" src="{% static 'web/js/Humanst521_BT_400.font.js' %}"></script>
   <script type="text/javascript" src="{% static 'web/js/Humanst521_Lt_BT_400.font.js' %}"></script>
-	<script type="text/javascript" src="{% static 'web/js/roundabout.js' %}"></script>
+  <script type="text/javascript" src="{% static 'web/js/roundabout.js' %}"></script>
   <script type="text/javascript" src="{% static 'web/js/roundabout_shapes.js' %}"></script>
   <script type="text/javascript" src="{% static 'web/js/gallery_init.js' %}"></script>
   <script type="text/javascript" src="{% static 'web/js/cufon-replace.js' %}"></script>
@@ -34,7 +36,7 @@
       <nav>
         <ul>
           <li><a href="{% url 'index' %}" class="current">Home</a></li>
-          <li><a href="about.html">Infórmate</a></li>
+          <li><a href="{% url 'web.about' %}">Infórmate</a></li>
           <li><a href="http://www.pisado.es/pisado/">Pisados</a></li>
           <li><a href="https://www.dropbox.com/sh/m1slr3t6xyizzg2/AABAOQfgLFwMcYB3PBXh7pyca?dl=0">Exámenes</a></li>
           <li><a href="contacts.html">FAQ</a></li>
@@ -49,6 +51,13 @@
       </nav>
     </div>
 	</header>
+  <div id="overbox3">
+    <div id="infobox3">
+        <p>Esta web utiliza cookies para obtener datos estadísticos de la navegación de sus usuarios. Si continúas navegando consideramos que aceptas su uso.
+        <a href="{% url 'web.politica_privacidad' %}">Más información</a>
+        <a onclick="aceptar_cookies();" style="cursor:pointer;">X Cerrar</a></p>
+    </div>
+  </div>
   {% endblock %}
 
 {% block content %}{% endblock %}
