@@ -32,11 +32,75 @@ html, body { height:100%;}
 	
 	/*Gallery*/
 	#gallery {
-		height:496px;
+
 		overflow:hidden;
-		background:url(../images/gallerry-bg.gif) 0 0 repeat-x;
+		background: #fff;
 	}
-	
+	/******* Galeria   ******/
+    /** TODO Hacer que el menu este SIEMPRE en medio **/
+    #botonesArea
+    {
+        /* Fondo */
+        float:right;
+        position:relative;
+        left:-25%;
+        text-align:left;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-size: 20px;
+        height: 43px;
+        text-transform: uppercase;
+    }
+    #botonesArea ul
+    {
+        /* Texto */
+        list-style:none;
+        left:50%;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: auto;
+    }
+    #botonesArea ul li
+    {
+        display: block;
+        float: left;
+        margin: 0 2px;
+    }
+    #botonesArea ul li a
+    {
+        color: #433B8F;
+        display: block;
+        float: left;
+        height: 43px;
+        line-height: 50px;
+        padding: 0 0 0 25px;
+        text-decoration: none;
+    }
+    #botonesArea ul li a span
+    {
+        display: block;
+        float: left;
+        height: 31px;
+        padding: 0 25px 0 0;
+        width: auto;
+    }
+    #botonesArea ul li a:hover
+    {
+        color: #000000;
+        background: #f2ffcc;
+    }
+    #botonesArea ul li a:hover span
+    {
+
+        cursor: pointer;
+        display: block;
+    }
+
+
+	/******* FIN galeria *******/
+	/*
+	#botonesArea ul li a.current,#botonesArea ul li a.current:hover{color:#894d12;background:transparent url("images/time2bed_left-ON.gif") no-repeat top left;}
+	*/
 	/* Content */
 	#content {
 		float: left;

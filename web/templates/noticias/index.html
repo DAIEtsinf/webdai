@@ -8,12 +8,12 @@
 </div><!-- /.container -->
 <!-- #gallery -->
 <section id="gallery">
-    <div class="container">
-        <ul id="myRoundabout">
-            <!-- 5 o 3 elementos, si no es así, qudeda mal-->
+    <div id="botonesArea">
+        <ul>
             {% for area in areas %}
-            <li><a href="{% url 'area' area.nombre %}"><img src="{{url}}{{area.nombre}}.jpg" alt=""></a></li>
+            <li><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
             {% endfor %}
+
         </ul>
     </div>
 </section>

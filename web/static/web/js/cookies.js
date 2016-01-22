@@ -3,12 +3,12 @@ function GetCookie(name) {
     var alen=arg.length;
     var clen=document.cookie.length;
     var i=0;
-
     while (i<clen) {
         var j=i+alen;
 
-        if (document.cookie.substring(i,j)==arg)
+        if (document.cookie.substring(i,j)==arg){
             return "1";
+        }
         i=document.cookie.indexOf(" ",i)+1;
         if (i==0)
             break;
@@ -29,11 +29,18 @@ function aceptar_cookies(){
     }
 }
 
-$(function() {
+function main(){
     var visit=GetCookie("cookies_surestao");
     if (visit==1){ popbox3(); }
+}
+/*
+$(function() {
+    alert();
+    var visit=GetCookie("cookies_surestao");
+    alert(visit);
+    if (visit==1){ popbox3(); }
 });
-
+*/
 function popbox3() {
     $('#overbox3').toggle();
 }
