@@ -60,14 +60,12 @@ html, body { height:100%;}
         padding: 0;
         width: auto;
     }
-    #botonesArea ul li
-    {
+    #botonesArea ul li {
         display: block;
         float: left;
         margin: 0 2px;
     }
-    #botonesArea ul li a
-    {
+    #botonesArea ul li a {
         color: #433B8F;
         display: block;
         float: left;

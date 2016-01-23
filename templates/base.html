@@ -40,8 +40,8 @@
           <li><a href="{% url 'web.about' %}">Infórmate</a></li>
           <li><a href="http://www.pisado.es/pisado/">Pisados</a></li>
           <li><a href="https://www.dropbox.com/sh/m1slr3t6xyizzg2/AABAOQfgLFwMcYB3PBXh7pyca?dl=0">Exámenes</a></li>
-          <li><a href="contacts.html">FAQ</a></li>
-          <li><a href="sitemap.html">Contact</a></li>
+          <li><a href="{% url 'web.faq' %}">Preguntas Frecuentes</a></li>
+          <li><a href="{% url 'web.contact' %}">Contact</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'accounts.logout' %}">Logout</a></li>
             <li><a href="{% url 'accounts.panel' %}">{{ user }}</a></li>

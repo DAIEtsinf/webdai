@@ -31,6 +31,20 @@ def about(request):
     })
     return HttpResponse(template.render(context))
 
+def contact_view(request):
+    template = loader.get_template('noticias/contacts.html')
+    context = RequestContext(request, {
+        # no info
+    })
+    return HttpResponse(template.render(context))
+
+def faq_view(request):
+    template = loader.get_template('noticias/preguntas_frecuentes.html')
+    context = RequestContext(request, {
+        # no info
+    })
+    return HttpResponse(template.render(context))
+
 def politica_privacidad(request):
     # TODO
     template = loader.get_template('noticias/politica_privacidad.html')
