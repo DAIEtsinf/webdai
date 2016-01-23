@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+
+
+h2 {
+    text-align: center;
+}
+
+</style>
+<div class="main-box">
+    <div>
+        <h2 >Hola {{ user.username }}</h2>
+    </div>
+<!-- #gallery -->
+<section id="gallery">
+    <h2>Elige el area donde vas a añadir la entrada</h2>
+    <div id="botonesArea">
+        <ul>
+            {% for area in areas %}
+            <li><a href="{% url 'accounts.entrada' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</section>
+<!-- /#gallery -->
+
+</div>
+{% endblock content %}

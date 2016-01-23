@@ -5,6 +5,7 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = 'accounts'
 urlpatterns = [
     url(r'^registro/$', views.registro_usuario_view, name='accounts.registro'),
     url(r'gracias/(?P<username>[\w]+)/$',
@@ -14,5 +15,6 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view, name='accounts.logout'),
     url(r'^login/$', views.login_view, name='accounts.login'),
     url(r'^panel/$', views.panel_view, name='accounts.panel'),
-
+    url(r'^elegirEntrada/$', views.elegirEntrada_view, name='accounts.elegirEntrada'),
+    url(r'^entrada/(?P<area>[a-zA-Z0-9]+)/$', views.entrada_view, name='accounts.entrada'),
 ]

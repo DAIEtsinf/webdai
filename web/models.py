@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
+import datetime
 
 class Perfil(models.Model):
     user = models.OneToOneField(User)
@@ -24,8 +25,8 @@ class Entrada(models.Model):
     resumen = RichTextField('Resumen de la noticia, para la pagina principal')
     id_area = models.ForeignKey(Area)
     id_usuario = models.ForeignKey(Perfil)
-    fecha = models.DateField()
-    imagen = models.CharField(max_length=500)
+    fecha = models.DateField(default=datetime.date.today)
+    imagen = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
         return self.titulo

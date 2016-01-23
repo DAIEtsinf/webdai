@@ -2,7 +2,8 @@
 
 from django import forms
 from django.contrib.auth.models import User
-
+from web.models import Entrada
+from ckeditor.widgets import CKEditorWidget
 
 class RegistroUserForm(forms.Form):
 
@@ -47,3 +48,31 @@ class RegistroUserForm(forms.Form):
         return password2
 
 
+class EntradaNuevaForm(forms.ModelForm):
+
+    class Meta:
+        model = Entrada
+         ## widgets
+
+        noticia = forms.CharField(widget=CKEditorWidget())
+
+
+        resumen = forms.CharField(
+            min_length=5,
+            widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+        imagen = forms.ImageField(required=False)
+
+        fields = ('titulo', 'noticia','resumen','imagen')
+
+        widgets = {
+            #'titulo': titulo,
+            'noticia': noticia
+        }
+
+        def clean_noticia(self):
+            """Comprueba que no exista un username igual en la db"""
+            titulo = self.cleaned_data['titulo']
+            if User.objects.filter(username=titulo):
+                raise forms.ValidationError('Esta noticia ya existe.')
+            return titulo
