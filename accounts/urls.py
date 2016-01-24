@@ -17,4 +17,8 @@ urlpatterns = [
     url(r'^panel/$', views.panel_view, name='accounts.panel'),
     url(r'^elegirEntrada/$', views.elegirEntrada_view, name='accounts.elegirEntrada'),
     url(r'^entrada/(?P<area>[a-zA-Z0-9]+)/$', views.entrada_view, name='accounts.entrada'),
+
+    url(r'^areasAdmin/$', views.areasAdmin_view, name='accounts.areasAdmin'),
+    url(r'^entradasAdmin/$', views.entradasAdmin_view, name='accounts.entradasAdmin'),
+    url(r'^createArea/$', views.createArea_view, name='accounts.createArea'),
 ]

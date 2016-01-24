@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from .forms import *
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
 from django.shortcuts import render
 from django.template import RequestContext, loader
 from django.http import HttpResponse
@@ -9,8 +8,7 @@ from web.models import Entrada, Area, Perfil
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-
+from .models import UserProfile
 
 
 def registro_usuario_view(request):
@@ -20,10 +18,33 @@ def registro_usuario_view(request):
 
         # Comprobamos si el formulario es valido
         if form.is_valid():
-            entrada = form.save(commit=False)
-            entrada.author = request.user
-            entrada.save()
-            return redirect(reverse('accounts.gracias', kwargs={'username': request.user}))
+            # En caso de ser valido, obtenemos los datos del formulario.
+            # form.cleaned_data obtiene los datos limpios y los pone en un
+            # diccionario con pares clave/valor, donde clave es el nombre del campo
+            # del formulario y el valor es el valor si existe.
+            cleaned_data = form.cleaned_data
+            username = cleaned_data.get('username')
+            password = cleaned_data.get('password')
+            email = cleaned_data.get('email')
+            photo = cleaned_data.get('photo')
+            # E instanciamos un objeto User, con el username y password
+            user_model = User.objects.create_user(username=username, password=password)
+            # Añadimos el email
+            user_model.email = email
+            # Y guardamos el objeto, esto guardara los datos en la db.
+            user_model.save()
+            # Ahora, creamos un objeto UserProfile, aunque no haya incluido
+            # una imagen, ya quedara la referencia creada en la db.
+            user_profile = UserProfile()
+            # Al campo user le asignamos el objeto user_model
+            user_profile.user = user_model
+            # y le asignamos la photo (el campo, permite datos null)
+            user_profile.photo = photo
+            # Por ultimo, guardamos tambien el objeto UserProfile
+            user_profile.save()
+            # Ahora, redireccionamos a la pagina accounts/gracias.html
+            # Pero lo hacemos con un redirect.
+            return redirect(reverse('accounts.gracias', kwargs={'username': username}))
     else:
         # Si el mthod es GET, instanciamos un objeto RegistroUserForm vacio
         form = RegistroUserForm()
@@ -32,17 +53,21 @@ def registro_usuario_view(request):
     # Y mostramos los datos
     return render(request, 'accounts/registro.html', context)
 
+
 @login_required
 def gracias_view(request, username):
     return render(request, 'accounts/gracias.html', {'username': username})
+
 
 @login_required
 def index_view(request):
     return render(request, 'accounts/index.html')
 
+
 @login_required
 def panel_view(request):
     return render(request, 'accounts/panel.html')
+
 
 @login_required
 def elegirEntrada_view(request):
@@ -53,10 +78,11 @@ def elegirEntrada_view(request):
     })
     return HttpResponse(template.render(context))
 
+
 ## TODO imagenes, redireccion
 @login_required
 def entrada_view(request, area):
-    #template = loader.get_template('accounts/entradasAdmin.html')
+    # template = loader.get_template('accounts/entradasAdmin.html')
     area_obj = Area.objects.get(nombre=area)
     perfil = Perfil.objects.get(user=request.user)
     if request.method == 'POST':
@@ -71,7 +97,7 @@ def entrada_view(request, area):
             post.imagen = "a"
             post.save()
 
-            #url = reverse('web.entradas')
+            # url = reverse('web.entradas')
 
             return redirect('/entradas/')
     else:
@@ -81,7 +107,7 @@ def entrada_view(request, area):
     context = {'form': form}
     # Y mostramos los datos
     return render(request, 'accounts/entradasAdmin.html', context)
-    #return HttpResponse(template.render(context))
+    # return HttpResponse(template.render(context))
 
 
 def login_view(request):
@@ -105,8 +131,52 @@ def login_view(request):
         mensaje = 'Nombre de usuario o contraseña no valido'
     return render(request, 'accounts/login.html', {'mensaje': mensaje})
 
+
 def logout_view(request):
     logout(request)
-    messages.success(request, 'Te has desconectado con exito.')
+    # messages.success(request, 'Te has desconectado con exito.')
     return redirect(reverse('accounts.login'))
 
+
+@login_required
+def areasAdmin_view(request):
+    areas = Area.objects.all()
+    template = loader.get_template('accounts/areasAdmin.html')
+    context = RequestContext(request, {
+        'areas': areas,
+    })
+    return HttpResponse(template.render(context))
+
+
+@login_required
+def entradasAdmin_view(request):
+    return render(request, 'accounts/entradasAdmin.html')
+
+
+def createArea_view(request):
+    if request.method == 'POST':
+        # Si el method es post, obtenemos los datos del formulario
+        form = AreaForm(request.POST)
+
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            # En caso de ser valido, obtenemos los datos del formulario.
+            # form.cleaned_data obtiene los datos limpios y los pone en un
+            # diccionario con pares clave/valor, donde clave es el nombre del campo
+            # del formulario y el valor es el valor si existe.
+            cleaned_data = form.cleaned_data
+            nombre_data = cleaned_data.get('nombre')
+            # E instanciamos un objeto Area
+            area_model = Area()
+            area_model.nombre = nombre_data
+            area_model.save()
+            # Ahora, redireccionamos a la pagina accounts/gracias.html
+            # Pero lo hacemos con un redirect.
+            return redirect(reverse('accounts.areasAdmin'))
+    else:
+        # Si el mthod es GET, instanciamos un objeto RegistroUserForm vacio
+        form = AreaForm()
+    # Creamos el contexto
+    context = {'form': form}
+    # Y mostramos los datos
+    return render(request, 'accounts/createArea.html', context)

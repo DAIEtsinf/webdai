@@ -15,19 +15,19 @@
                     {% endif %}
 
                     <form method="post" action="" class="form-container">
-                        <div class="form-title page-header"><h2>Login</h2></div>
                         {% csrf_token %}
+                        <div class="form-title page-header"><h2>Login</h2></div>
                         <div class="form-title">Nombre de usuario</div>
                         <input type="text" id="username" name="username" class="form-field" value="{{ username }}">
-
                         <div class="form-title">Contraseña</div>
                         <input type="password" name="password" id="password" class="form-field">
 
                         <div class="submit-container">
                             <button type="submit" class="submit-button">Login</button>
-                                <a href="{% url 'accounts.registro' %}" ><button class="submit-button">Registro</button></a>
+
                         </div>
                     </form>
+                    <a href="{% url 'accounts.registro' %}" ><button class="submit-button reg">Registro</button></a>
                 </div>
 
             </div>

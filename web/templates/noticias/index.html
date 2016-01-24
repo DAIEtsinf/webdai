@@ -30,7 +30,7 @@
                     <ul class="news">
                         {% for entrada in lista_ultimas_entradas %}
                         <li>
-                            <figure><strong>{{ entrada.fecha|date:"t" }}</strong>{{ entrada.fecha|date:"M" }}</figure>
+                            <figure><strong>{{ entrada.fecha|date:"d" }}</strong>{{ entrada.fecha|date:"M" }}</figure>
                             <a href="{% url 'entrada' entrada.id %}"><h3 class="titulo">{{ entrada.titulo}}</h3>
                                 {% autoescape off %}
                                 <div class="resumen">{{ entrada.resumen }}</div>
