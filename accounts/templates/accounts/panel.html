@@ -1,20 +1,33 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block content %}
+<style>
+    h2 {
+        text-align: center;
+        margin-top: 1em;
+    }
+</style>
+
 <div class="main-box">
-    <div>
-        <h2>{{ user }}</h2>
-    </div>
-    Hola de nuevo {{ user.username }}<br>
+    <h2>Hola de nuevo {{ user.username }}<br> </h2>
+    <div class="container">
+      <div class="inside">
+        <div class="wrapper">
+
 
     <div>
         <nav>
         <ul>
-          <li><a href="{% url 'web.areasAdmin' %}" class="current">Añadir Areas</a></li>
-          <li><a href="{% url 'accounts.elegirEntrada' %}">Añadir entradas</a></li>
+          <li><a href="{% url 'web.areasAdmin' %}" class="current"><button class="button">Modificar Perfil</button></a></li>
+          <li><a href="{% url 'web.areasAdmin' %}" class="current"><button class="button">Añadir Areas</button></a></li>
+          <li><a href="{% url 'accounts.elegirEntrada' %}"><button class="button">Añadir entradas</button></a></li>
         </ul>
       </nav>
+    </div>
+        </div>
+      </div>
     </div>
 </div>
 {% endblock content %}

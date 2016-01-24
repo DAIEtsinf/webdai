@@ -2,16 +2,17 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'web/css/indexStyle.css' %}" type="text/css" media="all">
 <div class="container">
     {% include "_messages.html" %}
 
 </div><!-- /.container -->
 <!-- #gallery -->
 <section id="gallery">
-    <div id="botonesArea">
+    <div id="botonesArea" >
         <ul>
             {% for area in areas %}
-            <li><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
+            <li ><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
             {% endfor %}
 
         </ul>
@@ -30,9 +31,9 @@
                         {% for entrada in lista_ultimas_entradas %}
                         <li>
                             <figure><strong>{{ entrada.fecha|date:"t" }}</strong>{{ entrada.fecha|date:"M" }}</figure>
-                            <a href="{% url 'entrada' entrada.id %}"><h3>{{ entrada.titulo}}</h3>
+                            <a href="{% url 'entrada' entrada.id %}"><h3 class="titulo">{{ entrada.titulo}}</h3>
                                 {% autoescape off %}
-                                {{ entrada.resumen }}
+                                <div class="resumen">{{ entrada.resumen }}</div>
                                 {% endautoescape %}</a>
 
                         </li>

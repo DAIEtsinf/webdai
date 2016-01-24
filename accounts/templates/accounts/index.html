@@ -3,13 +3,19 @@
 
 {% block content %}
 <div class="main-box">
-    <div>
-        <h2>Perfil de usuario</h2>
-    </div>
-    Hola de nuevo {{ user.username }}<br>
+    <div class="container">
+      <div class="inside">
+        <div class="wrapper">
+            <div>
+                <h2>Perfil de usuario</h2>
+            </div>
+            Hola de nuevo {{ user.username }}<br>
 
-    <div>
-        <img src="{{ MEDIA_URL }}{{ user.userprofile.photo }}" alt="Imagen de {{ user.username }}"/>
+            <div>
+                <img src="{{ MEDIA_URL }}{{ user.userprofile.photo }}" alt="Imagen de {{ user.username }}"/>
+            </div>
+        </div>
+      </div>
     </div>
 </div>
 {% endblock content %}

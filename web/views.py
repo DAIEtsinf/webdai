@@ -10,7 +10,8 @@ from django.core.urlresolvers import reverse
 
 # Create your views here.
 def index(request):
-    lista_ultimas_entradas = Entrada.objects.order_by('-fecha')[:4]
+    #lista_ultimas_entradas = Entrada.objects.order_by('-fecha')[:4]
+    lista_ultimas_entradas = Entrada.objects.order_by('-fecha')[:10]
     areas = Area.objects.all()
     template = loader.get_template('noticias/index.html')
     context = RequestContext(request, {
