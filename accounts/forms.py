@@ -2,8 +2,12 @@
 
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from web.models import Entrada, Area
 from ckeditor.widgets import CKEditorWidget
+from django.views.generic import FormView
+from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 
 class RegistroUserForm(forms.Form):
 
@@ -46,6 +50,44 @@ class RegistroUserForm(forms.Form):
         if password != password2:
             raise forms.ValidationError('Las contraseñas no coinciden.')
         return password2
+
+
+class PerfilForm(forms.ModelForm):
+
+    class Meta:
+
+        model = User
+         ## widgets
+
+        email = forms.EmailField(
+            widget=forms.EmailInput(attrs={'class': 'form-control form-field'}))
+
+        photo = forms.ImageField(required=False)
+
+        fields = ('email',)
+
+        widgets = {
+            #'email': email
+        }
+
+
+        def clean_email(self):
+            """Comprueba que no exista un email igual en la db"""
+            email = self.cleaned_data['email']
+            if User.objects.filter(email=email):
+                raise forms.ValidationError('Ya existe un email igual en la db.')
+            return email
+
+        def save(self, *args, **kwargs):
+            """
+            Update the primary email address on the related User object as well.
+            """
+            u = self.instance.user
+            u.email = self.cleaned_data['email']
+            u.save()
+            profile = super(PerfilForm, self).save(*args,**kwargs)
+            return profile
+
 
 class AreaForm(forms.Form):
 
