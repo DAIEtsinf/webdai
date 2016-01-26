@@ -4,30 +4,24 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from web.models import Entrada, Area
+from .models import UserProfile
 from ckeditor.widgets import CKEditorWidget
 from django.views.generic import FormView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 
-class RegistroUserForm(forms.Form):
+class RegistroUserForm(forms.ModelForm):
 
-    ## widgets
-    username = forms.CharField(
-        min_length=5,
-        widget=forms.TextInput(attrs={'class': 'form-control form-field'}))
+    password2 = forms.CharField(label='Confirma (contraseña)', widget=forms.PasswordInput)
 
-    email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'class': 'form-control form-field'}))
+    class Meta:
 
-    password = forms.CharField(
-        min_length=5,
-        widget=forms.PasswordInput(attrs={'class': 'form-control form-field'}))
+        model = User
 
-    password2 = forms.CharField(
-        min_length=5,
-        widget=forms.PasswordInput(attrs={'class': 'form-control form-field'}))
+        # ## widgets
 
-    photo = forms.ImageField(required=False)
+
+        fields = ('username', 'email','first_name','last_name', 'password','password2')
 
     def clean_username(self):
         """Comprueba que no exista un username igual en la db"""
@@ -37,11 +31,11 @@ class RegistroUserForm(forms.Form):
         return username
 
     def clean_email(self):
-        """Comprueba que no exista un email igual en la db"""
-        email = self.cleaned_data['email']
-        if User.objects.filter(email=email):
+         """Comprueba que no exista un email igual en la db"""
+         email = self.cleaned_data['email']
+         if User.objects.filter(email=email):
             raise forms.ValidationError('Ya existe un email igual en la db.')
-        return email
+         return email
 
     def clean_password2(self):
         """Comprueba que password y password2 sean iguales."""
@@ -52,41 +46,24 @@ class RegistroUserForm(forms.Form):
         return password2
 
 
+
+
 class PerfilForm(forms.ModelForm):
 
     class Meta:
 
-        model = User
+        model = UserProfile
          ## widgets
+        exclude = ['user']
 
-        email = forms.EmailField(
-            widget=forms.EmailInput(attrs={'class': 'form-control form-field'}))
 
         photo = forms.ImageField(required=False)
 
-        fields = ('email',)
+        fields = ('telefono','photo')
 
         widgets = {
             #'email': email
         }
-
-
-        def clean_email(self):
-            """Comprueba que no exista un email igual en la db"""
-            email = self.cleaned_data['email']
-            if User.objects.filter(email=email):
-                raise forms.ValidationError('Ya existe un email igual en la db.')
-            return email
-
-        def save(self, *args, **kwargs):
-            """
-            Update the primary email address on the related User object as well.
-            """
-            u = self.instance.user
-            u.email = self.cleaned_data['email']
-            u.save()
-            profile = super(PerfilForm, self).save(*args,**kwargs)
-            return profile
 
 
 class AreaForm(forms.Form):

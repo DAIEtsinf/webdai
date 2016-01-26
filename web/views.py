@@ -57,7 +57,6 @@ def entrada(request, entrada_id):
         entrada = Entrada.objects.get(id=entrada_id)
     except Entrada.DoesNotExist:
         raise Http404("La entrada no existe")
-    entradaActual = Entrada.objects.order_by('-fecha')[:5]
     template = loader.get_template('noticias/noticia.html')
     context = RequestContext(request, {
         'entrada': entrada,

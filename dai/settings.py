@@ -114,7 +114,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_PROFILE_MODULE = 'web.Perfil'
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 
 CKEDITOR_IMAGE_BACKEND  = 'pillow'
 CKEDITOR_UPLOAD_PATH = 'web/uploads/' # subida de archivos (MEDIA_ROOT + CKEDTIRO_UPLOAD_PATH)

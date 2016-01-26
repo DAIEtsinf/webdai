@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Area, Entrada, Perfil, Frases_celebres, FAQ
+from .models import Area, Entrada, Frases_celebres, FAQ
 
 class AreaAdmin(admin.ModelAdmin):
     model = Area
@@ -10,7 +10,7 @@ class EntradasAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Perfil)
+#admin.site.register(Perfil)
 admin.site.register(Area, AreaAdmin)
 admin.site.register(Entrada, EntradasAdmin)
 admin.site.register(FAQ)

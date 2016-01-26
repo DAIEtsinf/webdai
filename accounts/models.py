@@ -1,16 +1,15 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 # Create your models here.
 class UserProfile(models.Model):
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(User, unique=True)
     photo = models.ImageField(upload_to='profiles', blank=True, null=True)
-    nombre = models.CharField(max_length=50)
-    apellidos = models.CharField(max_length=100)
-    mail = models.CharField(max_length=75)
-    alias = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=250, blank=True)
+    telefono = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.nombre + " " + self.apellidos)[0:5]
+        return str(self.user)
 

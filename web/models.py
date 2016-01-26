@@ -3,15 +3,15 @@ from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 import datetime
 
-class Perfil(models.Model):
-    user = models.OneToOneField(User)
-    nombre = models.CharField(max_length=50)
-    apellidos = models.CharField(max_length=100)
-    mail = models.CharField(max_length=75)
-    alias = models.CharField(max_length=50)
+# region Users
+#User.add_to_class('direccion', models.FloatField(null=True,blank=True))
+#User.add_to_class('telefono', models.PositiveIntegerField(null=True,blank=True))
+#User.add_to_class('amigos', models.ManyToManyField('self', symmetrical=True,  blank=True))
+def user_str(self):
+    return self.username
 
-    def __str__(self):
-        return str(self.nombre + " " + self.apellidos)[0:5]
+User.add_to_class('__str__',user_str)
+# endregion
 
 class Area(models.Model):
     nombre = models.CharField(max_length=50, unique= True)
@@ -24,7 +24,7 @@ class Entrada(models.Model):
     noticia = RichTextField('Contenido de la noticia')
     resumen = RichTextField('Resumen de la noticia, para la pagina principal')
     id_area = models.ForeignKey(Area)
-    id_usuario = models.ForeignKey(Perfil)
+    id_usuario = models.ForeignKey(User)
     fecha = models.DateField(default=datetime.date.today)
     imagen = models.CharField(max_length=500, blank=True)
 
