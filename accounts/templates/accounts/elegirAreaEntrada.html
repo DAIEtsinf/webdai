@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+
+
+h2 {
+    text-align: center;
+}
+
+</style>
+<link rel="stylesheet" href="{% static 'web/css/shorts/areas.css' %}" type="text/css" media="all">
+
+<div class="main-box">
+    <div>
+        <h2 >Hola {{ user.username }}</h2>
+    </div>
+    <div class="container">
+      <div class="inside">
+        <div class="wrapper">
+            <!-- #gallery -->
+            <section id="gallery">
+                <h2>De que area es la entrada que quieres modificar?</h2>
+                <div id="botonesArea">
+                    <ul>
+                        {% for area in areas %}
+                        <li><a href="{% url 'accounts.entradasArea' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </section>
+            <!-- /#gallery -->
+            </div>
+          </div>
+        </div>
+
+</div>
+{% endblock content %}

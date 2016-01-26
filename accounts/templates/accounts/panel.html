@@ -8,6 +8,12 @@
         text-align: center;
         margin-top: 1em;
     }
+    .entradas{
+        float: left;
+    }
+    .entradas .mod {
+        margin: 4% 0 0 0;
+    }
 </style>
 
 <div class="main-box">
@@ -15,17 +21,18 @@
     <div class="container">
       <div class="inside">
         <div class="wrapper">
-
-
-    <div>
-        <nav>
-        <ul>
-          <li><a href="{% url 'accounts.perfil' %}" class="current"><button class="button">Modificar Perfil</button></a></li>
-          <li><a href="{% url 'accounts.areasAdmin' %}" class="current"><button class="button">Añadir Areas</button></a></li>
-          <li><a href="{% url 'accounts.elegirEntrada' %}"><button class="button">Añadir entradas</button></a></li>
-        </ul>
-      </nav>
-    </div>
+            <div>
+                <nav>
+                <ul>
+                    <li><a href="{% url 'accounts.perfil' %}" class="current"><button class="button">Modificar Perfil</button></a></li>
+                    <li><a href="{% url 'accounts.areasAdmin' %}" class="current"><button class="button">Añadir Areas</button></a></li>
+                    <div class="entradas">
+                        <li><a href="{% url 'accounts.elegirEntrada' %}"><button class="button">Añadir entradas</button></a></li>
+                        <li><a href="{% url 'accounts.modificarEntrada' %}"><button class="button mod">Modificar una entrada</button></a></li>
+                    </div>
+                </ul>
+              </nav>
+            </div>
         </div>
       </div>
     </div>

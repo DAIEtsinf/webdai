@@ -20,7 +20,10 @@ urlpatterns = [
     url(r'^panel/$', views.panel_view, name='accounts.panel'),
     url(r'^perfil/$', views.perfil_view, name='accounts.perfil'),
     url(r'^elegirEntrada/$', views.elegirEntrada_view, name='accounts.elegirEntrada'),
+    url(r'^modificarEntrada/$', views.modificarEntrada_view, name='accounts.modificarEntrada'),
+    url(r'^entradasArea/(?P<area>[a-zA-Z0-9]+)/$', views.entradasArea_view, name='accounts.entradasArea'),
     url(r'^entrada/(?P<area>[a-zA-Z0-9]+)/$', views.entrada_view, name='accounts.entrada'),
+    url(r'^modificarEntrada/(?P<entrada_id>[0-9]+)/$', views.updateEntrada_view, name='accounts.entrada'),
 
     #url(r'^modificarUsuario/$', views.modificarUsuario_view, name='accounts.modificarUsuario'),
     url(r'^areasAdmin/$', views.areasAdmin_view, name='accounts.areasAdmin'),

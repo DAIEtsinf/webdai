@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from .models import UserProfile
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import Http404
 
 @login_required
 def perfil_view(request):
@@ -85,6 +86,16 @@ def elegirEntrada_view(request):
     context = RequestContext(request, {
         'areas': areas,
     })
+    return HttpResponse(template.render(context))\
+
+@staff_member_required
+@login_required
+def modificarEntrada_view(request):
+    areas = Area.objects.all()
+    template = loader.get_template('accounts/elegirAreaEntrada.html')
+    context = RequestContext(request, {
+        'areas': areas,
+    })
     return HttpResponse(template.render(context))
 
 
@@ -94,6 +105,8 @@ def entrada_view(request, area):
     # template = loader.get_template('accounts/entradasAdmin.html')
     area_obj = Area.objects.get(nombre=area)
     user = User.objects.get(username=request.user)
+    tittle = "Creando entrada"
+    action = "Crear"
     if request.method == 'POST':
         # Si el method es post, obtenemos los datos del formulario
         form = EntradaNuevaForm(request.POST, request.user)
@@ -113,7 +126,9 @@ def entrada_view(request, area):
         # Si el mthod es GET, instanciamos un objeto RegistroUserForm vacio
         form = EntradaNuevaForm()
     # Creamos el contexto
-    context = {'form': form}
+    context = {'form': form,
+               'tittle': tittle,
+               'action': action}
     # Y mostramos los datos
     return render(request, 'accounts/entradasAdmin.html', context)
     # return HttpResponse(template.render(context))
@@ -185,3 +200,48 @@ def createArea_view(request):
     context = {'form': form}
     # Y mostramos los datos
     return render(request, 'accounts/createArea.html', context)
+
+@staff_member_required
+@login_required
+def entradasArea_view(request, area):
+    try:
+        areaObject = Area.objects.get(nombre=area)
+    except Area.DoesNotExist:
+        raise Http404("El area no existe")
+    try:
+        entradas = Entrada.objects.filter(id_area=areaObject.id).order_by('-fecha')
+    except Entrada.DoesNotExist:
+        raise Http404("La entrada no existe")
+
+    template = loader.get_template('accounts/elegirEntradaArea.html')
+    context = RequestContext(request, {
+        'area': areaObject,
+        'entradas': entradas
+    })
+    return HttpResponse(template.render(context))
+
+@staff_member_required
+@login_required
+def updateEntrada_view(request, entrada_id):
+    entrada = Entrada.objects.get(id=entrada_id)
+    if request.method == 'POST':
+        # Si el method es post, obtenemos los datos del formulario
+        form = EntradaNuevaForm(request.POST or None, instance = entrada)
+
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            form.save()
+            # Ahora, redireccionamos a la pagina accounts/gracias.html
+            # Pero lo hacemos con un redirect.
+            return redirect(reverse('accounts.areasAdmin'))
+
+    action = "Modificar"
+    tittle = "Modificando entrada"
+    form = EntradaNuevaForm(instance=entrada)
+    template = loader.get_template('accounts/entradasAdmin.html')
+    context = RequestContext(request, {
+        'tittle': tittle,
+        'action': action,
+        'form': form,
+    })
+    return HttpResponse(template.render(context))

@@ -10,14 +10,14 @@
         <div class="wrapper">
             <div class="col-md-6 col-sm-offset-3">
                 <div class="page-header">
-                    <h2>Creando Entrada</h2>
+                    <h2>{{tittle}}</h2>
                 </div>
 
                 <form method="post" action="" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
                     {{ form.media }}
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-primary">{{action}}</button>
                 </form>
             </div>
        </div>
