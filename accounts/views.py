@@ -8,22 +8,28 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from .models import UserProfile
+import string
 
 @login_required
 def perfil_view(request):
-    #user = User.objects.all()
-    user = User.objects.get(username=request.user)
+    perfil_form = PerfilForm(request.POST, instance=request.user)
+    user_form = UserForm(request.POST)
     if request.method == 'POST':
-        form = PerfilForm(request.POST)
 
-        if form.is_valid():
-            user.mail = form.cleaned_data['email']
+
+        if perfil_form.is_valid() and user_form.is_valid():
+            print(request.user)
+            user = request.user
+            user.email = user_form.cleaned_data['email']
             user.save()
-
-    else:
-        # Si el mthod es GET, instanciamos un objeto RegistroUserForm vacio
-        form = PerfilForm()
-    context = {'form': form}
+            profile = UserProfile.objects.get(user=user)
+            if perfil_form.cleaned_data['telefono']:
+                profile.telefono = perfil_form.cleaned_data['telefono']
+            if perfil_form.cleaned_data['photo']:
+                profile.photo = perfil_form.cleaned_data['photo']
+            profile.save()
+    context = {'perfil_form': perfil_form,
+               'user_form': user_form}
     return render(request, 'accounts/perfil.html', context)
     #context = {'perfil': perfil}
 
@@ -49,28 +55,6 @@ def registro_usuario_view(request):
             profile = userProfile_form.save(commit = False)
             profile.user = user
             profile.save()
-            # #cleaned_data = perfil_form.cleaned_data
-            # #username = cleaned_data.get('username')
-            # #password = cleaned_data.get('password')
-            # #email = cleaned_data.get('email')
-            # #photo = cleaned_data.get('photo')
-            # # E instanciamos un objeto User, con el username y password
-            # user_model = User.objects.create_user(username=username, password=password)
-            # # Añadimos el email
-            # user_model.email = email
-            # # Y guardamos el objeto, esto guardara los datos en la db.
-            # user_model.save()
-            # # Ahora, creamos un objeto UserProfile, aunque no haya incluido
-            # # una imagen, ya quedara la referencia creada en la db.
-            # user_profile = UserProfile()
-            # # Al campo user le asignamos el objeto user_model
-            # user_profile.user = user_model
-            # # y le asignamos la photo (el campo, permite datos null)
-            # user_profile.photo = photo
-            # # Por ultimo, guardamos tambien el objeto UserProfile
-            # user_profile.save()
-            # # Ahora, redireccionamos a la pagina accounts/gracias.html
-            # # Pero lo hacemos con un redirect.
 
             return redirect(reverse('accounts.gracias', kwargs={'username': user}))
 

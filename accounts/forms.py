@@ -18,9 +18,6 @@ class RegistroUserForm(forms.ModelForm):
 
         model = User
 
-        # ## widgets
-
-
         fields = ('username', 'email','first_name','last_name', 'password','password2')
 
     def clean_username(self):
@@ -65,6 +62,21 @@ class PerfilForm(forms.ModelForm):
             #'email': email
         }
 
+class UserForm(forms.ModelForm):
+
+    class Meta:
+
+        model = User
+
+        fields = ('email',)
+
+    def clean_email(self):
+         """Comprueba que no exista un email igual en la db"""
+         email = self.cleaned_data['email']
+         if User.objects.filter(email=email):
+            pass
+            #raise forms.ValidationError('Ya existe un email igual en la db.')
+         return email
 
 class AreaForm(forms.Form):
 
