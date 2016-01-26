@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from .models import UserProfile
-import string
+from django.contrib.admin.views.decorators import staff_member_required
 
 @login_required
 def perfil_view(request):
@@ -31,9 +31,6 @@ def perfil_view(request):
     context = {'perfil_form': perfil_form,
                'user_form': user_form}
     return render(request, 'accounts/perfil.html', context)
-    #context = {'perfil': perfil}
-
-    #return render(request, 'accounts/perfil.html', context)
 
 
 @login_required
@@ -80,7 +77,7 @@ def index_view(request):
 def panel_view(request):
     return render(request, 'accounts/panel.html')
 
-
+@staff_member_required
 @login_required
 def elegirEntrada_view(request):
     areas = Area.objects.all()
@@ -96,7 +93,7 @@ def elegirEntrada_view(request):
 def entrada_view(request, area):
     # template = loader.get_template('accounts/entradasAdmin.html')
     area_obj = Area.objects.get(nombre=area)
-    user = User.objects.get(user=request.user)
+    user = User.objects.get(username=request.user)
     if request.method == 'POST':
         # Si el method es post, obtenemos los datos del formulario
         form = EntradaNuevaForm(request.POST, request.user)
@@ -149,7 +146,7 @@ def logout_view(request):
     # messages.success(request, 'Te has desconectado con exito.')
     return redirect(reverse('accounts.login'))
 
-
+@staff_member_required
 @login_required
 def areasAdmin_view(request):
     areas = Area.objects.all()
@@ -159,12 +156,13 @@ def areasAdmin_view(request):
     })
     return HttpResponse(template.render(context))
 
-
+@staff_member_required
 @login_required
 def entradasAdmin_view(request):
     return render(request, 'accounts/entradasAdmin.html')
 
-
+@staff_member_required
+@login_required
 def createArea_view(request):
     if request.method == 'POST':
         # Si el method es post, obtenemos los datos del formulario

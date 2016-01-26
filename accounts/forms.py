@@ -12,6 +12,7 @@ from django.contrib import messages
 
 class RegistroUserForm(forms.ModelForm):
 
+    password = forms.CharField(widget=forms.PasswordInput())
     password2 = forms.CharField(label='Confirma (contraseña)', widget=forms.PasswordInput)
 
     class Meta:
@@ -19,6 +20,7 @@ class RegistroUserForm(forms.ModelForm):
         model = User
 
         fields = ('username', 'email','first_name','last_name', 'password','password2')
+
 
     def clean_username(self):
         """Comprueba que no exista un username igual en la db"""
@@ -41,6 +43,13 @@ class RegistroUserForm(forms.ModelForm):
         if password != password2:
             raise forms.ValidationError('Las contraseñas no coinciden.')
         return password2
+
+    def save(self, commit=True):
+        user = super(RegistroUserForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
 
 
 
