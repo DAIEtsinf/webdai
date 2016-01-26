@@ -26,7 +26,7 @@ class Entrada(models.Model):
     id_area = models.ForeignKey(Area)
     id_usuario = models.ForeignKey(User)
     fecha = models.DateField(default=datetime.date.today)
-    imagen = models.CharField(max_length=500, blank=True)
+    #imagen = models.ImageField(upload_to='/some/path',blank=True, null=True)
 
     def __str__(self):
         return self.titulo

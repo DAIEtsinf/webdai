@@ -138,6 +138,11 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': None,
     },
+    'resume': {
+        "removePlugins": "stylesheetparser",
+        'height': 200,
+        'width': 500,
+    }
 }
 
 

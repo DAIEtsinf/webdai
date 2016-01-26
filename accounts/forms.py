@@ -104,6 +104,8 @@ class AreaForm(forms.Form):
 
 class EntradaNuevaForm(forms.ModelForm):
 
+    resumen = forms.CharField(widget=CKEditorWidget('resume'))
+
     class Meta:
         model = Entrada
          ## widgets
@@ -115,13 +117,14 @@ class EntradaNuevaForm(forms.ModelForm):
             min_length=5,
             widget=forms.TextInput(attrs={'class': 'form-control'}))
 
-        imagen = forms.ImageField(required=False)
+        #imagen = forms.ImageField(null=True, blank=True)
 
-        fields = ('titulo', 'noticia','resumen','imagen')
+        fields = ('titulo', 'noticia','resumen')
 
         widgets = {
             #'titulo': titulo,
-            'noticia': noticia
+            'noticia': noticia,
+            #'imagen': imagen
         }
 
         def clean_noticia(self):
