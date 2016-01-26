@@ -7,21 +7,15 @@
     {% include "_messages.html" %}
 
 </div><!-- /.container -->
-<!-- #gallery -->
-<section id="gallery">
-    <div id="botonesArea" >
-        <ul>
-            {% for area in areas %}
-            <li ><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
-            {% endfor %}
 
-        </ul>
-    </div>
-</section>
-<!-- /#gallery -->
 <div class="main-box">
     <div class="container">
         <div class="inside">
+            <div class="separator"></div>
+            <!-- #gallery -->
+            {% include "noticias/shorts/areas.html" %}
+            <!-- /#gallery -->
+            <div class="separator"></div>
             <div class="wrapper">
                 <!-- aside -->
                 <aside>

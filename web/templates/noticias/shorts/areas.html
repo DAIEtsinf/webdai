@@ -1,0 +1,12 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'web/css/shorts/areas.css' %}" type="text/css" media="all">
+<section id="gallery">
+    <div id="botonesArea" >
+        <ul>
+            {% for area in areas %}
+            <li ><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</section>

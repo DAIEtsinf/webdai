@@ -36,66 +36,7 @@ html, body { height:100%;}
 		overflow:hidden;
 		background: #fff;
 	}
-	/******* Galeria   ******/
-    /** TODO Hacer que el menu este SIEMPRE en medio **/
-    #botonesArea
-    {
-        /* Fondo */
-        float:right;
-        position:relative;
-        left:-25%;
-        text-align:left;
-        font-family: Georgia, "Times New Roman", Times, serif;
-        font-size: 20px;
-        height: 43px;
-        text-transform: uppercase;
-    }
-    #botonesArea ul
-    {
-        /* Texto */
-        list-style:none;
-        left:50%;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: auto;
-    }
-    #botonesArea ul li {
-        display: block;
-        float: left;
-        margin: 0 2px;
-    }
-    #botonesArea ul li a {
-        color: #433B8F;
-        display: block;
-        float: left;
-        height: 43px;
-        line-height: 50px;
-        padding: 0 0 0 25px;
-        text-decoration: none;
-    }
-    #botonesArea ul li a span
-    {
-        display: block;
-        float: left;
-        height: 31px;
-        padding: 0 25px 0 0;
-        width: auto;
-    }
-    #botonesArea ul li a:hover
-    {
-        color: #000000;
-        background: #f2ffcc;
-    }
-    #botonesArea ul li a:hover span
-    {
 
-        cursor: pointer;
-        display: block;
-    }
-
-
-	/******* FIN galeria *******/
 	/*
 	#botonesArea ul li a.current,#botonesArea ul li a.current:hover{color:#894d12;background:transparent url("images/time2bed_left-ON.gif") no-repeat top left;}
 	*/
@@ -135,6 +76,7 @@ html, body { height:100%;}
 .wrapper { 
 	width:100%;
 	overflow:hidden;
+	margin-top: 3%;
 }
 
 /* The inside class provides consistent padding. To be used often! */
@@ -512,3 +454,9 @@ footer {
 			}
 
 /*==========================================*/
+
+.separator{
+    width: 100%;
+    height: 0.2em;
+    background: grey;
+}

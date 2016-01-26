@@ -34,15 +34,17 @@ def about(request):
 
 def contact_view(request):
     template = loader.get_template('noticias/contacts.html')
+    areas = Area.objects.all()
     context = RequestContext(request, {
-        # no info
+        'areas': areas,
     })
     return HttpResponse(template.render(context))
 
 def faq_view(request):
     template = loader.get_template('noticias/preguntas_frecuentes.html')
+    areas = Area.objects.all()
     context = RequestContext(request, {
-        # no info
+        'areas': areas,
     })
     return HttpResponse(template.render(context))
 

@@ -15,16 +15,7 @@
         <div class="wrapper">
                 <div>
                     <!-- #gallery -->
-                    <section id="gallery">
-                        <div id="botonesArea" >
-                            <ul>
-                                {% for area in areas %}
-                                <li ><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
-                                {% endfor %}
-
-                            </ul>
-                        </div>
-                    </section>
+                    {% include "noticias/shorts/areas.html" %}
                     <!-- /#gallery -->
                     <a href="{% url 'accounts.createArea' %}"><button class="button" style="margin: 10% 0 0 35%">Crear Area</button></a>
                 </div>
