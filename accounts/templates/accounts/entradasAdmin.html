@@ -17,7 +17,10 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     {{ form.media }}
-                    <button type="submit" class="btn btn-primary">{{action}}</button>
+                    <button type="submit" class="btn btn-primary" value="modify" name="modify">{{action}}</button>
+                    {% if delete == True %}
+                        <button type="submit" class="btn btn-primary" value="delete" name="delete">Eliminar esta entrada</button>
+                    {% endif %}
                 </form>
             </div>
        </div>

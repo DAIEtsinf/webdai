@@ -14,7 +14,7 @@ from django.http import Http404
 @login_required
 def perfil_view(request):
     perfil_form = PerfilForm(request.POST, instance=request.user)
-    user_form = UserForm(request.POST)
+    user_form = UserForm(request.POST,instance=request.user)
     if request.method == 'POST':
 
 
@@ -29,6 +29,10 @@ def perfil_view(request):
             if perfil_form.cleaned_data['photo']:
                 profile.photo = perfil_form.cleaned_data['photo']
             profile.save()
+    else: #get
+        profile = UserProfile.objects.get(user=request.user)
+        perfil_form = PerfilForm(instance=profile)
+        user_form = UserForm(instance=request.user)
     context = {'perfil_form': perfil_form,
                'user_form': user_form}
     return render(request, 'accounts/perfil.html', context)
@@ -223,25 +227,27 @@ def entradasArea_view(request, area):
 @staff_member_required
 @login_required
 def updateEntrada_view(request, entrada_id):
+    action2 = request.POST.get('action')
     entrada = Entrada.objects.get(id=entrada_id)
     if request.method == 'POST':
-        # Si el method es post, obtenemos los datos del formulario
         form = EntradaNuevaForm(request.POST or None, instance = entrada)
-
-        # Comprobamos si el formulario es valido
-        if form.is_valid():
+        if 'delete' in request.POST:
+            entrada.delete()
+            return redirect(reverse('accounts.index'))
+        elif form.is_valid():
             form.save()
-            # Ahora, redireccionamos a la pagina accounts/gracias.html
-            # Pero lo hacemos con un redirect.
-            return redirect(reverse('accounts.areasAdmin'))
+
+            return redirect(reverse('accounts.index'))
 
     action = "Modificar"
     tittle = "Modificando entrada"
+    delete = True
     form = EntradaNuevaForm(instance=entrada)
     template = loader.get_template('accounts/entradasAdmin.html')
     context = RequestContext(request, {
         'tittle': tittle,
         'action': action,
         'form': form,
+        'delete': delete,
     })
     return HttpResponse(template.render(context))
