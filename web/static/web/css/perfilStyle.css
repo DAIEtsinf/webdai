@@ -122,6 +122,38 @@ input:focus {
     color: red;
 }
 
+.intr{
+    text-align: center;
+    font-size: 2em;
+}
+
 .errornote{
 
+}
+
+.data_camps{
+    margin-top: 5%;
+}
+
+.tittle{
+    text-align: center;
+    font-size: 4em;
+}
+
+.inf{
+    letter-spacing: 1.5px;
+}
+
+.camp{
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.data{
+    text-align: center;
+    margin: 1% 0 1% 0;
+}
+
+.image{
+    margin: 5% 0 0 20%;
 }

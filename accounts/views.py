@@ -13,7 +13,7 @@ from django.http import Http404
 
 @login_required
 def perfil_view(request):
-    perfil_form = PerfilForm(request.POST, instance=request.user)
+    perfil_form = PerfilForm(request.POST, request.FILES, instance=request.user)
     user_form = UserForm(request.POST,instance=request.user)
     if request.method == 'POST':
 
@@ -29,6 +29,10 @@ def perfil_view(request):
             if perfil_form.cleaned_data['photo']:
                 profile.photo = perfil_form.cleaned_data['photo']
             profile.save()
+            context = {
+                'userProfile': profile,
+            }
+            return render(request, 'accounts/index.html', context)
     else: #get
         profile = UserProfile.objects.get(user=request.user)
         perfil_form = PerfilForm(instance=profile)
@@ -37,17 +41,9 @@ def perfil_view(request):
                'user_form': user_form}
     return render(request, 'accounts/perfil.html', context)
 
-
-@login_required
-def modificarUsuario_view(request):
-    perfil = request.user.profile
-    perfil.email = request.POST['email']
-    perfil.save()
-    pass
-
 def registro_usuario_view(request):
     user_form = RegistroUserForm(request.POST)
-    userProfile_form = PerfilForm(request.POST)
+    userProfile_form = PerfilForm(request.POST, request.FILES)
     if request.method == 'POST':
 
         # Comprobamos si el formulario es valido
@@ -75,8 +71,12 @@ def gracias_view(request, username):
 
 @login_required
 def index_view(request):
-    return render(request, 'accounts/index.html')
-
+    userProfile = UserProfile.objects.get(user = request.user)
+    template = loader.get_template('accounts/index.html')
+    context = RequestContext(request, {
+        'userProfile': userProfile,
+    })
+    return HttpResponse(template.render(context))
 
 @login_required
 def panel_view(request):

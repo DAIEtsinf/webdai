@@ -9,7 +9,7 @@
     <div class="container">
       <div class="inside">
         <div class="wrapper">
-            <form class="form-container" method="post">
+            <form class="form-container" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-title"><h2>Login</h2></div>
                 <div class="form-title">Nombre de usuario </div>
@@ -31,14 +31,3 @@
     </div>
 </div>
 {% endblock content %}
-<!--
-<div class="form-title"> username {{user.username}}</div>
-{{ form.password }}
-                    <div class="form-title"> first name {{user.first_name}}</div>
-                    <div class="form-title">last name {{user.last_name}}</div>
-                    <div class="form-title">email {{user.email}}</div>
-                    <div class="form-title">ult con {{user.last_login}}</div>
-                    <input class="form-field" type="text" name="firstname" /><br />
-                    <div class="form-title">Email</div>
-                    <input class="form-field" type="text" name="email" /><br />
--->

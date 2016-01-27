@@ -2,17 +2,37 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'web/css/perfilStyle.css' %}" type="text/css" media="all">
+
 <div class="main-box">
     <div class="container">
       <div class="inside">
         <div class="wrapper">
             <div>
-                <h2>Perfil de usuario</h2>
+                <h2 class="tittle">Perfil de usuario <b>{{ user.username }}</b></h2>
             </div>
-            Hola de nuevo {{ user.username }}<br>
+            </br>
+            <h3 class="intr">Tus datos son: </h3>
+            <div class="data_camps">
+                <div class="data">
+                    <span class="camp">Nombre: </span> <span class="inf">{{user.first_name}}  {{user.last_name}}</span>
+                </div>
+                <div class="data">
+                    <span class="camp">Email: </span> <span class="inf">{{user.email}} </span>
+                </div>
+                <div class="data">
+                    <span class="camp">Telefono de contacto: </span> <span class="inf">{{userProfile.telefono}} </span>
+                </div>
 
-            <div>
-                <img src="{{ MEDIA_URL }}{{ user.photo }}" alt="Imagen de {{ user.username }}"/>
+
+                <div class="image">
+                    {% if userProfile.photo %}
+                        <img name="photo" src="{{ userProfile.photo.url }}" alt="Imagen de {{ user.username }}"/>
+                    {% endif %}
+                </div>
+                <div class="data">
+                    <span class="camp"><div class="form-title">Ultima conexion: {{user.last_login}}</div> </span>
+                </div>
             </div>
         </div>
       </div>
