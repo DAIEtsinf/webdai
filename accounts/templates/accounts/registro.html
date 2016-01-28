@@ -11,7 +11,7 @@
                 <form method="post" action="" enctype="multipart/form-data" class="form-container">
                     {% csrf_token %}
                     <div class="form-title page-header"><h2 >Registro</h2></div>
-                    <div class="form-title">Nombre de usuario</div>
+                    <div class="form-title">Nombre de usuario <span class="error">{{ user_form.username.errors.as_text }}</span></div>
                     {{ user_form.username }}
                     <div class="form-title">Nombre</div>
                     {{ user_form.first_name }}
@@ -19,9 +19,9 @@
                     {{ user_form.last_name }}
                     <div class="form-title">Email</div>
                     {{ user_form.email }}
-                    <div class="form-title">Contraseña </div>
+                    <div class="form-title">Contraseña <span class="error">{{ user_form.password.errors.as_text }}</span> </div>
                     {{ user_form.password }}
-                    <div class="form-title">Contraseña (confirma)</div>
+                    <div class="form-title">Contraseña (confirma) <span class="error">{{ user_form.password2.errors.as_text }}</span></div>
                     {{ user_form.password2 }}
                     <div class="form-title">Telefono de contactp</div>
                     {{ userProfile_form.telefono }}

@@ -493,3 +493,8 @@ footer {
     z-index: 5;
 
   }
+
+/* errors */
+.error{
+    color: red;
+}
