@@ -36,6 +36,9 @@ INSTALLED_APPS = (
     'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -115,6 +118,31 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
+# Add the 'allauth' backend to AUTHENTICATION_BACKEND and do not remove ModelBackend
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin and to ensure compatibility with other packages
+    'django.contrib.auth.backends.ModelBackend',
+    # 'allauth' specific authentication methods
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+
+# Custom allauth settings
+# Use email as the primary identifier
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+# Make email verification mandatory to avoid junk email accounts
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# Eliminate need to provide username, as it's a very old practice
+ACCOUNT_USERNAME_REQUIRED = False
+
+ACCOUNT_SIGNUP_FORM_CLASS = "accounts.forms.RegistroUserForm"
+
+LOGIN_REDIRECT_URL = "/"
 
 CKEDITOR_IMAGE_BACKEND  = 'pillow'
 CKEDITOR_UPLOAD_PATH = 'web/uploads/' # subida de archivos (MEDIA_ROOT + CKEDTIRO_UPLOAD_PATH)

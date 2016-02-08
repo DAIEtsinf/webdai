@@ -17,17 +17,10 @@ class RegistroUserForm(forms.ModelForm):
 
     class Meta:
 
-        model = User
+        model = UserProfile
 
-        fields = ('username', 'email','first_name','last_name', 'password','password2')
+        fields = ('user', 'photo', 'direccion', 'telefono')
 
-
-    def clean_username(self):
-        """Comprueba que no exista un username igual en la db"""
-        username = self.cleaned_data['username']
-        if User.objects.filter(username=username):
-            raise forms.ValidationError('Nombre de usuario ya registrado.')
-        return username
 
     def clean_email(self):
          """Comprueba que no exista un email igual en la db"""
@@ -35,24 +28,6 @@ class RegistroUserForm(forms.ModelForm):
          if User.objects.filter(email=email):
             raise forms.ValidationError('Ya existe un email igual en la db.')
          return email
-
-    def clean_password2(self):
-        """Comprueba que password y password2 sean iguales."""
-        password = self.cleaned_data['password']
-        password2 = self.cleaned_data['password2']
-        if password != password2:
-            raise forms.ValidationError('Las contraseñas no coinciden.')
-        return password2
-
-    def save(self, commit=True):
-        user = super(RegistroUserForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password"])
-        if commit:
-            user.save()
-        return user
-
-
-
 
 class PerfilForm(forms.ModelForm):
 

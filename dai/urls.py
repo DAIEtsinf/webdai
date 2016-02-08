@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 
 urlpatterns = [
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^', include('web.urls') ),
     #url(r'^entradas/', include('web.urls')),
     #url(r'^area/', include('web.urls')),
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     # /accounts,
     url(r'^accounts/', include('accounts.urls', namespace="accounts")),
+
 ]
 
 if settings.DEBUG:
