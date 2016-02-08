@@ -13,21 +13,16 @@ from django.http import Http404
 
 @login_required
 def perfil_view(request):
-    perfil_form = PerfilForm(request.POST, request.FILES, instance=request.user)
     user_form = UserForm(request.POST,instance=request.user)
     if request.method == 'POST':
 
 
-        if perfil_form.is_valid() and user_form.is_valid():
+        if user_form.is_valid():
             print(request.user)
             user = request.user
             user.email = user_form.cleaned_data['email']
             user.save()
             profile = UserProfile.objects.get(user=user)
-            if perfil_form.cleaned_data['telefono']:
-                profile.telefono = perfil_form.cleaned_data['telefono']
-            if perfil_form.cleaned_data['photo']:
-                profile.photo = perfil_form.cleaned_data['photo']
             profile.save()
             context = {
                 'userProfile': profile,
@@ -71,10 +66,8 @@ def gracias_view(request, username):
 
 @login_required
 def index_view(request):
-    userProfile = UserProfile.objects.get(user = request.user)
     template = loader.get_template('accounts/index.html')
     context = RequestContext(request, {
-        'userProfile': userProfile,
     })
     return HttpResponse(template.render(context))
 

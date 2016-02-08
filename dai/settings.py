@@ -140,7 +140,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # Eliminate need to provide username, as it's a very old practice
 ACCOUNT_USERNAME_REQUIRED = False
 
-ACCOUNT_SIGNUP_FORM_CLASS = "accounts.forms.RegistroUserForm"
+#ACCOUNT_SIGNUP_FORM_CLASS = "accounts.forms.RegistroUserForm"
 
 LOGIN_REDIRECT_URL = "/"
 
