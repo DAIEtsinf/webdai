@@ -11,15 +11,13 @@
         <div class="wrapper">
             <form class="form-container" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <!--<div class="form-title"><h2>Login</h2></div>
+                <div class="form-title"><h2>Perfil</h2></div>
                 <div class="form-title">Nombre de usuario </div>
-                <div class="form-field username">{{user.username}}</div></br>
-                <div class="form-title">Email</div>
-                {{user_form.email}}
-                <div class="form-title">Telefono de contacto</div>
-                {{perfil_form.telefono}}
-                <div class="form-title">Foto</div>
-                {{perfil_form.photo}}-->
+                <div class="form-field ">{{user_form.username}}</div></br>
+                <div class="form-title">Nombre</div>
+                {{user_form.first_name}}
+                <div class="form-title">Apellidos</div>
+                {{user_form.last_name}}
                 <div class="submit-container">
                     <input class="submit-button" type="submit" value="Actualizar" />
                     <a href="{% url 'accounts.change_password' %}" class="submit-button">Cambiar contraseña</a>

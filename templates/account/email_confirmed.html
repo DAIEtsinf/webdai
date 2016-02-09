@@ -1,4 +1,3 @@
- <!-- TODO  -->
 {% extends "account/base.html" %}
 
 {% load i18n %}
@@ -8,11 +7,18 @@
 
 
 {% block content %}
+ <div class="main-box">
+    <div class="container">
+      <div class="inside">
+        <div class="wrapper">
+            <h2>{% trans "Confirmacion de correo" %}</h2>
 
-<h1>{% trans "Confirm E-mail Address" %}</h1>
+            {% user_display confirmation.email_address.user as user_display %}
 
-{% user_display confirmation.email_address.user as user_display %}
-        
-<p>{% blocktrans with confirmation.email_address.email as email %}You have confirmed that <a href="mailto:{{email}}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
+            <p>{% blocktrans with confirmation.email_address.email as email %}Has confirmado que <a href="mailto:{{email}}">{{ email }}</a> es un correo para el usuario {{ user_display }}.{% endblocktrans %}</p>
 
+        </div>
+      </div>
+    </div>
+ </div>
 {% endblock %}

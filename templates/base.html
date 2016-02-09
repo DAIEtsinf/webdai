@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 
-  <title>Home - Home Page | Design Company - Free Website Template from Templatemonster.com</title>
+  <title>Dai - Web</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="{% static 'web/css/reset.css' %}" type="text/css" media="all">
   <link rel="stylesheet" href="{% static 'web/css/cookiesStyle.css' %}" type="text/css" media="all">
@@ -48,7 +48,7 @@
           <li><a href="{% url 'web.contact' %}">Contact</a></li>
           {% if user.is_authenticated %}
             <li><a href="{% url 'accounts.logout' %}">Logout</a></li>
-            <li><a href="{% url 'accounts.panel' %}">{{ user }}</a></li>
+            <li><a href="{% url 'accounts.panel' %}">{{ user.first_name }}</a></li>
           {% else %}
             <li><a href="{% url 'accounts.login' %}">Login</a></li>
           {% endif %}

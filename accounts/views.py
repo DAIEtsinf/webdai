@@ -22,18 +22,12 @@ def perfil_view(request):
             user = request.user
             user.email = user_form.cleaned_data['email']
             user.save()
-            profile = UserProfile.objects.get(user=user)
-            profile.save()
             context = {
-                'userProfile': profile,
             }
             return render(request, 'accounts/index.html', context)
     else: #get
-        profile = UserProfile.objects.get(user=request.user)
-        perfil_form = PerfilForm(instance=profile)
         user_form = UserForm(instance=request.user)
-    context = {'perfil_form': perfil_form,
-               'user_form': user_form}
+    context = {'user_form': user_form}
     return render(request, 'accounts/perfil.html', context)
 
 def registro_usuario_view(request):

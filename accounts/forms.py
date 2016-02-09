@@ -52,7 +52,7 @@ class UserForm(forms.ModelForm):
 
         model = User
 
-        fields = ('email',)
+        fields = ('email','first_name','last_name','username')
 
     def clean_email(self):
          """Comprueba que no exista un email igual en la db"""

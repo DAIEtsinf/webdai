@@ -34,7 +34,7 @@ urlpatterns = [
     url(
         '^change_password/',
         auth_views.password_change,
-        {'template_name': 'accounts/change_password.html'},
+        {'template_name': 'account/password_change.html'},
         name="accounts.change_password"
     )
 ]

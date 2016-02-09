@@ -18,17 +18,7 @@
                     <span class="camp">Nombre: </span> <span class="inf">{{user.first_name}}  {{user.last_name}}</span>
                 </div>
                 <div class="data">
-                    <span class="camp">Email: </span> <span class="inf">{{user.email}} </span>
-                </div>
-                <div class="data">
-                    <span class="camp">Telefono de contacto: </span> <span class="inf">{{userProfile.telefono}} </span>
-                </div>
-
-
-                <div class="image">
-                    {% if userProfile.photo %}
-                        <img name="photo" src="{{ userProfile.photo.url }}" alt="Imagen de {{ user.username }}"/>
-                    {% endif %}
+                    <span class="camp">Email: </span> <span class="inf">{{user}} </span>
                 </div>
                 <div class="data">
                     <span class="camp"><div class="form-title">Ultima conexion: {{user.last_login}}</div> </span>

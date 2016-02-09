@@ -5,14 +5,14 @@
 {% block title %}Registro de usuario{% endblock title %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'web/css/loginStyle.css' %}" type="text/css" media="all">
+<link rel="stylesheet" href="{% static 'web/css/signupStyle.css' %}" type="text/css" media="all">
 <div class="main-box">
     <div class="container">
         <div class="inside">
             <div class="wrapper">
               <h2>{% trans "Sign Up" %}</h2>
 
-              <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+              <p>{% blocktrans %}Ya tienes una cuenta? Entonces, <a href="{{ login_url }}">logea</a>.{% endblocktrans %}</p>
 
               <form class="signup form-container" id="signup_form" method="post" action="{% url 'account_signup' %}">
                 {% csrf_token %}
@@ -21,7 +21,7 @@
                 <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
                 <div class="submit-container">
-                  <button type="submit-button">{% trans "Sign Up" %} &raquo;</button>
+                  <button type="submit-button" class="button">{% trans "Sign Up" %} &raquo;</button>
                 </div>
               </form>
               </div>
