@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="main-box">
+    <link rel="stylesheet" href="{% static 'web/css/area_cultural.css' %}" type="text/css" media="all">
+      <div class="inside">
+        <!-- .news -->
+        <h2>Area cultural</h2>
+        {% for evento in eventos %}
+           <div class="actividades">
+                <ul class="news tituloEvento"> <h3 class ="titulo">{{evento.titulo}} </h3>
+                    {% for act in evento.actividad_set.all %}
+
+                          <a href="{% url 'actividad' act.id %}">
+                              <li><div class="titulo_act">{{act.titulo}}</div>
+                                {% autoescape off %}
+                                <div class="resumen">{{ act.resumen }}</div>
+                                {% endautoescape %}</a>
+                              </li>
+                          </a>
+                    {% endfor %}
+            </ul>
+              </div>
+        {% endfor %}
+      </div>
+  </div>
+{% endblock content %}

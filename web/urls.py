@@ -9,7 +9,9 @@ urlpatterns = [
     url(r'^about/$', views.about, name='web.about'),
     # ex: /entrada/5/
     url(r'^entrada/(?P<entrada_id>[0-9]+)/$', views.entrada, name='entrada'),
+    url(r'^actividad/(?P<actividad_id>[0-9]+)/$', views.actividad, name='actividad'),
     # ex: /area/Academicas/
+    url(r'^area/Cultural/$', views.area_cultural, name='area'),
     url(r'^area/(?P<area>[a-zA-Z0-9]+)/$', views.area, name='area'),
     url(r'^ckeditor/', include('ckeditor.urls')),
     # ex: /entradas/

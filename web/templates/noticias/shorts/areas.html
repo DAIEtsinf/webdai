@@ -4,9 +4,12 @@
     <div id="botonesArea" >
         <ul>
             {% for area in areas %}
-            <li ><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
+                {% if area.nombre == "Cultural" %}
+                    <li ><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
+                {% else %}
+                    <li ><a href="{% url 'area' area.nombre %}" title="{{ area.nombre }}"><span>{{ area.nombre }}</span></a></li>
+                {% endif %}
             {% endfor %}
-
         </ul>
     </div>
 </section>

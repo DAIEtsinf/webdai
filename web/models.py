@@ -38,3 +38,22 @@ class Frases_celebres(models.Model):
 class FAQ(models.Model):
     pregunta= models.CharField(max_length=300)
     respuesta = models.CharField(max_length=300)
+
+# Semana cultural
+
+class Evento(models.Model):
+    titulo = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.titulo
+
+class Actividad(models.Model):
+    titulo = models.CharField(max_length=100)
+    noticia = RichTextField('Contenido de la actividad')
+    resumen = RichTextField('Resumen de la actividad, para la pagina principal')
+    id_area = models.ForeignKey(Evento)
+    id_usuario = models.ForeignKey(User)
+    fecha = models.DateField(default=datetime.date.today)
+
+    def __str__(self):
+        return self.titulo

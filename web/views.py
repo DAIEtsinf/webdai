@@ -1,12 +1,7 @@
-from django.shortcuts import render
 from django.http import Http404
-from .forms import AreaForm
 from django.template import RequestContext, loader
 from django.http import HttpResponse
-from web.models import Entrada, Area
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-from django.core.urlresolvers import reverse
+from web.models import Entrada, Area, Evento, Actividad
 
 # Create your views here.
 def index(request):
@@ -65,10 +60,6 @@ def entrada(request, entrada_id):
     })
     return HttpResponse(template.render(context))
 
-#def detail(request, question_id):
-    #question = get_object_or_404(Question, pk=question_id)
-    #return render(request, 'polls/detail.html', {'question': question})
-
 def area(request, area):
     try:
         areaObject = Area.objects.get(nombre=area)
@@ -86,3 +77,24 @@ def area(request, area):
     })
     return HttpResponse(template.render(context))
 
+def area_cultural(request):
+    area = "Cultural"
+
+    eventos = Evento.objects.all()
+
+    template = loader.get_template('noticias/area_cultural.html')
+    context = RequestContext(request, {
+        'eventos': eventos,
+    })
+    return HttpResponse(template.render(context))
+
+def actividad(request, actividad_id):
+    try:
+        actividad = Actividad.objects.get(id=actividad_id)
+    except Actividad.DoesNotExist:
+        raise Http404("El evento no existe")
+    template = loader.get_template('noticias/noticia.html')
+    context = RequestContext(request, {
+        'entrada': actividad,
+    })
+    return HttpResponse(template.render(context))
