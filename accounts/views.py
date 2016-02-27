@@ -2,12 +2,11 @@ from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.template import RequestContext, loader
-from django.http import HttpResponse, HttpResponseRedirect
-from web.models import Area
+from django.http import HttpResponse
+from web.models import Area, Evento, Actividad
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-from .models import UserProfile
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import Http404
 
@@ -194,6 +193,33 @@ def createArea_view(request):
 
 @staff_member_required
 @login_required
+def createActividad_view(request, act):
+    evento = Evento.objects.get(titulo=act)
+    user = User.objects.get(username=request.user)
+    if request.method == 'POST':
+        # Si el method es post, obtenemos los datos del formulario
+        form = ActividadForm(request.POST)
+
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.id_evento_id = evento.id
+            post.id_usuario = user
+            post.save()
+            # Ahora, redireccionamos a la pagina accounts/gracias.html
+            # Pero lo hacemos con un redirect.
+            return redirect(reverse('accounts.areasAdmin'))
+    else:
+        form = ActividadForm()
+    # Creamos el contexto
+    context = {'form': form,
+               'name': act}
+    # Y mostramos los datos
+    return render(request, 'accounts/createActividad.html', context)
+
+
+@staff_member_required
+@login_required
 def entradasArea_view(request, area):
     try:
         areaObject = Area.objects.get(nombre=area)
@@ -214,7 +240,6 @@ def entradasArea_view(request, area):
 @staff_member_required
 @login_required
 def updateEntrada_view(request, entrada_id):
-    action2 = request.POST.get('action')
     entrada = Entrada.objects.get(id=entrada_id)
     if request.method == 'POST':
         form = EntradaNuevaForm(request.POST or None, instance = entrada)

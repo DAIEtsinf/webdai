@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^entradasArea/(?P<area>[a-zA-Z0-9]+)/$', views.entradasArea_view, name='accounts.entradasArea'),
     url(r'^entrada/(?P<area>[a-zA-Z0-9]+)/$', views.entrada_view, name='accounts.entrada'),
     url(r'^modificarEntrada/(?P<entrada_id>[0-9]+)/$', views.updateEntrada_view, name='accounts.entrada'),
+    url(r'^anadirEvento/(?P<act>[a-zA-Z0-9 ]+)/$', views.createActividad_view, name='accounts.anadirEvento'),
 
     #url(r'^modificarUsuario/$', views.modificarUsuario_view, name='accounts.modificarUsuario'),
     url(r'^areasAdmin/$', views.areasAdmin_view, name='accounts.areasAdmin'),

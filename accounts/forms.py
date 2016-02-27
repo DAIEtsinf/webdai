@@ -2,13 +2,9 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import PasswordChangeForm
-from web.models import Entrada, Area
+from web.models import Entrada, Area, Actividad
 from .models import UserProfile
 from ckeditor.widgets import CKEditorWidget
-from django.views.generic import FormView
-from django.core.urlresolvers import reverse_lazy
-from django.contrib import messages
 
 class RegistroUserForm(forms.ModelForm):
 
@@ -75,6 +71,41 @@ class AreaForm(forms.Form):
         if Area.objects.filter(nombre=nombre):
             raise forms.ValidationError('Area ya registrada.')
         return nombre
+
+
+class ActividadForm(forms.ModelForm):
+
+
+
+    class Meta:
+        model = Actividad
+
+        ## widgets
+
+        resumen = forms.CharField(widget=CKEditorWidget('resume'))
+
+        noticia = forms.CharField(widget=CKEditorWidget())
+
+
+        resumen = forms.CharField(
+            min_length=5,
+            widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+        widgets = {
+            #'titulo': titulo,
+            'noticia': noticia,
+            'resumen': resumen,
+        }
+
+        fields = ('titulo', 'noticia','resumen')
+
+        def clean_noticia(self):
+            """Comprueba que no exista un username igual en la db"""
+            titulo = self.cleaned_data['titulo']
+            if User.objects.filter(username=titulo):
+                raise forms.ValidationError('Esta noticia ya existe.')
+            return titulo
 
 
 class EntradaNuevaForm(forms.ModelForm):

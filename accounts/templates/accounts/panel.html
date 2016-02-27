@@ -23,7 +23,13 @@
         max-height: 3em;
         line-height: 22px;
         padding:20px;
+        overflow: initial;
+        white-space: nowrap;
+        display: block;
+        text-overflow: ellipsis;
+
     }
+
 
 </style>
 
@@ -49,6 +55,12 @@
                     <div class="entradas">
                         <li><a href="{% url 'accounts.elegirEntrada' %}"><button class="button">Añadir entradas</button></a></li>
                         <li><a href="{% url 'accounts.modificarEntrada' %}"><button class="button mod">Modificar una entrada</button></a></li>
+                    </div>
+                    <h5 class="one"><span>Semana cultural</span></h5>
+                    <div class="entradas">
+                        <li><a href="{% url 'accounts.anadirEvento' 'eventos' %}"><button class="button">Añadir evento</button></a></li>
+                        <li><a href="{% url 'accounts.anadirEvento' 'Actividades '%}"><button class="button mod">Añadir actividad</button></a></li>
+                        <li><a href="{% url 'accounts.anadirEvento' 'Entrega de premios' %}"><button class="button mod">Añadir entrega de premios</button></a></li>
                     </div>
                 </ul>
               </nav>

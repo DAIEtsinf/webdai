@@ -51,7 +51,7 @@ class Actividad(models.Model):
     titulo = models.CharField(max_length=100)
     noticia = RichTextField('Contenido de la actividad')
     resumen = RichTextField('Resumen de la actividad, para la pagina principal')
-    id_area = models.ForeignKey(Evento)
+    id_evento = models.ForeignKey(Evento)
     id_usuario = models.ForeignKey(User)
     fecha = models.DateField(default=datetime.date.today)
 
