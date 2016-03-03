@@ -1,10 +1,18 @@
 # accounts/forms.py
-
+from django.conf import settings
+from allauth.socialaccount.forms import SignupForm
 from django import forms
 from django.contrib.auth.models import User
+
 from web.models import Entrada, Area, Actividad
 from .models import UserProfile
 from ckeditor.widgets import CKEditorWidget
+import re
+from allauth.exceptions import ImmediateHttpResponse
+from django.shortcuts import render_to_response
+
+
+
 
 class RegistroUserForm(forms.ModelForm):
 

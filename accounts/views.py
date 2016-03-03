@@ -2,7 +2,7 @@ from .forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.template import RequestContext, loader
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponsePermanentRedirect
 from web.models import Area, Evento, Actividad
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -263,3 +263,6 @@ def updateEntrada_view(request, entrada_id):
         'delete': delete,
     })
     return HttpResponse(template.render(context))
+
+def url_soloUPV(request):
+    return HttpResponsePermanentRedirect("accounts/soloUPV.html")

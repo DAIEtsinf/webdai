@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -140,6 +141,9 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # Eliminate need to provide username, as it's a very old practice
 ACCOUNT_USERNAME_REQUIRED = False
 
+ALLOWED_DOMAIN = 'upv'
+ACCOUNT_ADAPTER = "accounts.my_adapter.OnlyUPVAdapter"
+
 #ACCOUNT_SIGNUP_FORM_CLASS = "accounts.forms.RegistroUserForm"
 
 LOGIN_REDIRECT_URL = "/"
@@ -150,6 +154,7 @@ CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.j
 
 #MEDIA_ROOT = is the path on the filesystem to the directory containing your static media.
 #MEDIA_URL = is the URL that makes the static media accessible over HTTP.
+
 
 #MEDIA_ROOT = 'media'
 #MEDIA_URL = '/'

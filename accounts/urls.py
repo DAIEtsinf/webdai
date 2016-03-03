@@ -5,6 +5,7 @@ from django.conf.urls import include,url
 from django.contrib.auth import views as auth_views
 
 
+
 from . import views
 
 app_name = 'accounts'
@@ -32,6 +33,7 @@ urlpatterns = [
     url(r'^createArea/$', views.createArea_view, name='accounts.createArea'),
     url('^', include('django.contrib.auth.urls')),
     # TODO redireccionar
+    url(r'^soloUPV/$', views.url_soloUPV, name='accounts.soloUPV'),
     url(
         '^change_password/',
         auth_views.password_change,
