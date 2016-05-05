@@ -34,6 +34,7 @@ urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
     # TODO redireccionar
     url(r'^soloUPV/$', views.url_soloUPV, name='accounts.soloUPV'),
+    url(r'^error/$', views.error_view, name='accounts.error'),
     url(
         '^change_password/',
         auth_views.password_change,

@@ -178,4 +178,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+# prueba
+
+handler404 = 'accounts.views.error404'
 

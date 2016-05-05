@@ -266,3 +266,10 @@ def updateEntrada_view(request, entrada_id):
 
 def url_soloUPV(request):
     return HttpResponsePermanentRedirect("accounts/soloUPV.html")
+
+def error404(request):
+    return render(request,'404.html')
+
+def error_view(request, error):
+    return render(request, 'accounts/error.html', {'error': error})
+    #return redirect(reverse('accounts.error', kwargs={'error': error}))

@@ -1,9 +1,19 @@
 from allauth.account.adapter import DefaultAccountAdapter
-from django.shortcuts import redirect
-from django.http import HttpResponse, HttpResponseGone
+from . import views
 from dai.settings import ALLOWED_DOMAIN
 import re
+from .forms import *
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render
+from django.template import RequestContext, loader
+from django.http import HttpResponse, HttpResponseRedirect
+from web.models import Area, Evento, Actividad
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import Http404
+
 
 class OnlyUPVAdapter(DefaultAccountAdapter):
 
