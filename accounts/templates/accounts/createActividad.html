@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    h2 {
+        text-align: center;
+
+    }
+
+</style>
+<div class="main-box">
+    <div class="container">
+      <div class="inside">
+        <div class="wrapper">
+            <div class="col-md-6 col-sm-offset-3">
+                <form method="post" action="" class="" enctype="multipart/form-data">
+                    <div class="form-title page-header"><h2>Creando {{ name }}</h2></div>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {{ form.media }}
+                    <div class="submit-container">
+                        <button type="submit" class="submit-button">Registrar</button>
+                    </div>
+                </form>
+                </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

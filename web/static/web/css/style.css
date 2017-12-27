@@ -32,11 +32,14 @@ html, body { height:100%;}
 	
 	/*Gallery*/
 	#gallery {
-		height:496px;
+
 		overflow:hidden;
-		background:url(../images/gallerry-bg.gif) 0 0 repeat-x;
+		background: #fff;
 	}
-	
+
+	/*
+	#botonesArea ul li a.current,#botonesArea ul li a.current:hover{color:#894d12;background:transparent url("images/time2bed_left-ON.gif") no-repeat top left;}
+	*/
 	/* Content */
 	#content {
 		float: left;
@@ -73,6 +76,7 @@ html, body { height:100%;}
 .wrapper { 
 	width:100%;
 	overflow:hidden;
+	margin-top: 3%;
 }
 
 /* The inside class provides consistent padding. To be used often! */
@@ -450,3 +454,47 @@ footer {
 			}
 
 /*==========================================*/
+
+.separator{
+    width: 100%;
+    height: 0.2em;
+    background: grey;
+}
+
+/* Another separator */
+ h5 {
+        position: relative;
+        margin-top: 20px;
+
+  }
+
+  h5.one {
+        margin-top: 0;
+        text-align: center;
+        font-size: 2em;
+        margin: 1% 0 2% 0;
+  }
+
+  h5.one:before {
+        content: "";
+        display: block;
+        border-top: solid 1px black;
+        width: 100%;
+        height: 1px;
+        position: absolute;
+        top: 50%;
+        z-index: 1;
+  }
+
+  h5.one span {
+    background: #fff;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+
+  }
+
+/* errors */
+.error{
+    color: red;
+}

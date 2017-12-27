@@ -1,0 +1,65 @@
+	/******* Galeria   ******/
+
+    #gallery{
+        overflow: visible;
+        width: 100%:
+
+    }
+    #botonesArea
+    {
+        width: 100%:
+        /* Fondo */
+        float:right;
+        position:relative;
+        text-align:left;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-size: 20px;
+        height: 43px;
+        text-transform: uppercase;
+    }
+    #botonesArea ul
+    {
+        width: 100%:
+        /* Texto */
+        list-style:none;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: auto;
+    }
+    #botonesArea ul li {
+        width: 100%:
+        display: block;
+        float: left;
+        margin: 0 2px;
+    }
+    #botonesArea ul li a {
+        color: #433B8F;
+        display: block;
+        height: 43px;
+        line-height: 50px;
+        padding: 0 0 0 25px;
+        text-decoration: none;
+    }
+    #botonesArea ul li a span
+    {
+        display: block;
+        float: left;
+        height: 31px;
+        padding: 0 25px 0 0;
+        width: auto;
+    }
+    #botonesArea ul li a:hover
+    {
+        color: #000000;
+        background: #f2ffcc;
+    }
+    #botonesArea ul li a:hover span
+    {
+
+        cursor: pointer;
+        display: block;
+    }
+
+
+	/******* FIN galeria *******/

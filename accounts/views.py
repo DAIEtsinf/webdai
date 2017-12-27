@@ -1,68 +1,127 @@
+from .forms import *
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
-from django.contrib.auth.models import User
+from django.template import RequestContext, loader
+from django.http import HttpResponse, HttpResponsePermanentRedirect
+from web.models import Area, Evento, Actividad
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-from .forms import RegistroUserForm
-from .models import UserProfile
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import Http404
+
+@login_required
+def perfil_view(request):
+    user_form = UserForm(request.POST,instance=request.user)
+    if request.method == 'POST':
 
 
+        if user_form.is_valid():
+            print(request.user)
+            user = request.user
+            user.email = user_form.cleaned_data['email']
+            user.save()
+            context = {
+            }
+            return render(request, 'accounts/index.html', context)
+    else: #get
+        user_form = UserForm(instance=request.user)
+    context = {'user_form': user_form}
+    return render(request, 'accounts/perfil.html', context)
 
 def registro_usuario_view(request):
+    user_form = RegistroUserForm(request.POST)
+    userProfile_form = PerfilForm(request.POST, request.FILES)
     if request.method == 'POST':
-        # Si el method es post, obtenemos los datos del formulario
-        form = RegistroUserForm(request.POST, request.FILES)
 
         # Comprobamos si el formulario es valido
-        if form.is_valid():
-            # En caso de ser valido, obtenemos los datos del formulario.
-            # form.cleaned_data obtiene los datos limpios y los pone en un
-            # diccionario con pares clave/valor, donde clave es el nombre del campo
-            # del formulario y el valor es el valor si existe.
-            cleaned_data = form.cleaned_data
-            username = cleaned_data.get('username')
-            password = cleaned_data.get('password')
-            email = cleaned_data.get('email')
-            photo = cleaned_data.get('photo')
-            # E instanciamos un objeto User, con el username y password
-            user_model = User.objects.create_user(username=username, password=password)
-            # Añadimos el email
-            user_model.email = email
-            # Y guardamos el objeto, esto guardara los datos en la db.
-            user_model.save()
-            # Ahora, creamos un objeto UserProfile, aunque no haya incluido
-            # una imagen, ya quedara la referencia creada en la db.
-            user_profile = UserProfile()
-            # Al campo user le asignamos el objeto user_model
-            user_profile.user = user_model
-            # y le asignamos la photo (el campo, permite datos null)
-            user_profile.photo = photo
-            # Por ultimo, guardamos tambien el objeto UserProfile
-            user_profile.save()
-            # Ahora, redireccionamos a la pagina accounts/gracias.html
-            # Pero lo hacemos con un redirect.
-            return redirect(reverse('accounts.gracias', kwargs={'username': username}))
-    else:
-        # Si el mthod es GET, instanciamos un objeto RegistroUserForm vacio
-        form = RegistroUserForm()
+        if user_form.is_valid() and userProfile_form.is_valid():
+
+            user = user_form.save()
+            profile = userProfile_form.save(commit = False)
+            profile.user = user
+            profile.save()
+
+            return redirect(reverse('accounts.gracias', kwargs={'username': user}))
+
     # Creamos el contexto
-    context = {'form': form}
+    context = {'user_form': user_form,
+               'userProfile_form': userProfile_form
+               }
     # Y mostramos los datos
     return render(request, 'accounts/registro.html', context)
+
 
 @login_required
 def gracias_view(request, username):
     return render(request, 'accounts/gracias.html', {'username': username})
 
+
 @login_required
 def index_view(request):
-    return render(request, 'accounts/index.html')
+    template = loader.get_template('accounts/index.html')
+    context = RequestContext(request, {
+    })
+    return HttpResponse(template.render(context))
 
 @login_required
 def panel_view(request):
     return render(request, 'accounts/panel.html')
+
+@staff_member_required
+@login_required
+def elegirEntrada_view(request):
+    areas = Area.objects.all()
+    template = loader.get_template('accounts/elegirArea.html')
+    context = RequestContext(request, {
+        'areas': areas,
+    })
+    return HttpResponse(template.render(context))\
+
+@staff_member_required
+@login_required
+def modificarEntrada_view(request):
+    areas = Area.objects.all()
+    template = loader.get_template('accounts/elegirAreaEntrada.html')
+    context = RequestContext(request, {
+        'areas': areas,
+    })
+    return HttpResponse(template.render(context))
+
+
+## TODO imagenes, redireccion
+@login_required
+def entrada_view(request, area):
+    # template = loader.get_template('accounts/entradasAdmin.html')
+    area_obj = Area.objects.get(nombre=area)
+    user = User.objects.get(username=request.user)
+    tittle = "Creando entrada"
+    action = "Crear"
+    if request.method == 'POST':
+        # Si el method es post, obtenemos los datos del formulario
+        form = EntradaNuevaForm(request.POST, request.user)
+
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.id_area_id = area_obj.id
+            post.id_usuario = user
+            post.imagen = "a"
+            post.save()
+
+            # url = reverse('web.entradas')
+
+            return redirect('/entradas/')
+    else:
+        # Si el mthod es GET, instanciamos un objeto RegistroUserForm vacio
+        form = EntradaNuevaForm()
+    # Creamos el contexto
+    context = {'form': form,
+               'tittle': tittle,
+               'action': action}
+    # Y mostramos los datos
+    return render(request, 'accounts/entradasAdmin.html', context)
+    # return HttpResponse(template.render(context))
 
 
 def login_view(request):
@@ -81,13 +140,136 @@ def login_view(request):
                 return redirect(reverse('accounts.index'))
             else:
                 # Redireccionar informando que la cuenta esta inactiva
-                # Lo dejo como ejercicio al lector :)
+                # TODO
                 pass
         mensaje = 'Nombre de usuario o contraseña no valido'
     return render(request, 'accounts/login.html', {'mensaje': mensaje})
 
+
 def logout_view(request):
     logout(request)
-    messages.success(request, 'Te has desconectado con exito.')
+    # messages.success(request, 'Te has desconectado con exito.')
     return redirect(reverse('accounts.login'))
 
+@staff_member_required
+@login_required
+def areasAdmin_view(request):
+    areas = Area.objects.all()
+    template = loader.get_template('accounts/areasAdmin.html')
+    context = RequestContext(request, {
+        'areas': areas,
+    })
+    return HttpResponse(template.render(context))
+
+@staff_member_required
+@login_required
+def entradasAdmin_view(request):
+    return render(request, 'accounts/entradasAdmin.html')
+
+@staff_member_required
+@login_required
+def createArea_view(request):
+    if request.method == 'POST':
+        # Si el method es post, obtenemos los datos del formulario
+        form = AreaForm(request.POST)
+
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            nombre_data = cleaned_data.get('nombre')
+            area_model = Area()
+            area_model.nombre = nombre_data
+            area_model.save()
+            # Ahora, redireccionamos a la pagina accounts/gracias.html
+            # Pero lo hacemos con un redirect.
+            return redirect(reverse('accounts.areasAdmin'))
+    else:
+        # Si el mthod es GET, instanciamos un objeto RegistroUserForm vacio
+        form = AreaForm()
+    # Creamos el contexto
+    context = {'form': form}
+    # Y mostramos los datos
+    return render(request, 'accounts/createArea.html', context)
+
+@staff_member_required
+@login_required
+def createActividad_view(request, act):
+    evento = Evento.objects.get(titulo=act)
+    user = User.objects.get(username=request.user)
+    if request.method == 'POST':
+        # Si el method es post, obtenemos los datos del formulario
+        form = ActividadForm(request.POST)
+
+        # Comprobamos si el formulario es valido
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.id_evento_id = evento.id
+            post.id_usuario = user
+            post.save()
+            # Ahora, redireccionamos a la pagina accounts/gracias.html
+            # Pero lo hacemos con un redirect.
+            return redirect(reverse('accounts.areasAdmin'))
+    else:
+        form = ActividadForm()
+    # Creamos el contexto
+    context = {'form': form,
+               'name': act}
+    # Y mostramos los datos
+    return render(request, 'accounts/createActividad.html', context)
+
+
+@staff_member_required
+@login_required
+def entradasArea_view(request, area):
+    try:
+        areaObject = Area.objects.get(nombre=area)
+    except Area.DoesNotExist:
+        raise Http404("El area no existe")
+    try:
+        entradas = Entrada.objects.filter(id_area=areaObject.id).order_by('-fecha')
+    except Entrada.DoesNotExist:
+        raise Http404("La entrada no existe")
+
+    template = loader.get_template('accounts/elegirEntradaArea.html')
+    context = RequestContext(request, {
+        'area': areaObject,
+        'entradas': entradas
+    })
+    return HttpResponse(template.render(context))
+
+@staff_member_required
+@login_required
+def updateEntrada_view(request, entrada_id):
+    entrada = Entrada.objects.get(id=entrada_id)
+    if request.method == 'POST':
+        form = EntradaNuevaForm(request.POST or None, instance = entrada)
+        if 'delete' in request.POST:
+            entrada.delete()
+            return redirect(reverse('accounts.index'))
+        elif form.is_valid():
+            form.save()
+
+            return redirect(reverse('accounts.index'))
+
+    action = "Modificar"
+    tittle = "Modificando entrada"
+    delete = True
+    form = EntradaNuevaForm(instance=entrada)
+    template = loader.get_template('accounts/entradasAdmin.html')
+    context = RequestContext(request, {
+        'tittle': tittle,
+        'action': action,
+        'form': form,
+        'delete': delete,
+    })
+    return HttpResponse(template.render(context))
+
+def url_soloUPV(request):
+    return HttpResponsePermanentRedirect("accounts/soloUPV.html")
+
+def error404(request):
+    return render(request,'404.html')
+
+def error_view(request, error):
+    return render(request, 'accounts/error.html', {'error': error})
+    #return redirect(reverse('accounts.error', kwargs={'error': error}))

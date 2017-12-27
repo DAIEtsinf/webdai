@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Registro de usuario{% endblock title %}
+
+
+{% block content %}
+<div class="main-box">
+    <div class="container">
+      <div class="inside">
+        <div class="wrapper">
+            <div class="col-md-6 col-sm-offset-3">
+                <div class="page-header">
+                    <h2>{{tittle}}</h2>
+                </div>
+
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {{ form.media }}
+                    <button type="submit" class="btn btn-primary" value="modify" name="modify">{{action}}</button>
+                    {% if delete == True %}
+                        <button type="submit" class="btn btn-primary" value="delete" name="delete">Eliminar esta entrada</button>
+                    {% endif %}
+                </form>
+            </div>
+       </div>
+     </div>
+  </div>
+</div>
+{% endblock content %}

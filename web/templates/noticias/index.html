@@ -2,25 +2,20 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'web/css/indexStyle.css' %}" type="text/css" media="all">
 <div class="container">
     {% include "_messages.html" %}
 
 </div><!-- /.container -->
-<!-- #gallery -->
-<section id="gallery">
-    <div class="container">
-        <ul id="myRoundabout">
-            <!-- 5 o 3 elementos, si no es así, qudeda mal-->
-            {% for area in areas %}
-            <li><a href="{% url 'area' area.nombre %}"><img src="{{url}}{{area.nombre}}.jpg" alt=""></a></li>
-            {% endfor %}
-        </ul>
-    </div>
-</section>
-<!-- /#gallery -->
+
 <div class="main-box">
     <div class="container">
         <div class="inside">
+            <div class="separator"></div>
+            <!-- #gallery -->
+            {% include "noticias/shorts/areas.html" %}
+            <!-- /#gallery -->
+            <div class="separator"></div>
             <div class="wrapper">
                 <!-- aside -->
                 <aside>
@@ -29,10 +24,10 @@
                     <ul class="news">
                         {% for entrada in lista_ultimas_entradas %}
                         <li>
-                            <figure><strong>{{ entrada.fecha|date:"t" }}</strong>{{ entrada.fecha|date:"M" }}</figure>
-                            <a href="{% url 'entrada' entrada.id %}"><h3>{{ entrada.titulo}}</h3>
+                            <figure><strong>{{ entrada.fecha|date:"d" }}</strong>{{ entrada.fecha|date:"M" }}</figure>
+                            <a href="{% url 'entrada' entrada.id %}"><h3 class="titulo">{{ entrada.titulo}}</h3>
                                 {% autoescape off %}
-                                {{ entrada.resumen }}
+                                <div class="resumen">{{ entrada.resumen }}</div>
                                 {% endautoescape %}</a>
 
                         </li>

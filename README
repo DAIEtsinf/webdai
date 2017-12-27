@@ -1,17 +1,20 @@
-README
-
-Web de la delegación de alumnos de informática
-
 # INSTALLED
-# Paquetes a instalar
-# pip.3.4 with su permissions
-pip install django-ckeditor # https://github.com/django-ckeditor/django-ckeditor/blob/master/README.rst
+# 
+pip.3.4 with su permissions
+
+pip install django-ckeditor 
+
+# https://github.com/django-ckeditor/django-ckeditor/blob/master/README.rst
+
 
 pip install pillow
 
-# Preparar el proyecto
-# super user
-python manage.py createsuperuser
+pip install django-allauth
 
-# panel de admin en: localhost:8000/admin
-# servidor para pruebas: python3.4 manage.py runserver
+
+
+
+# super user
+
+
+python manage.py createsuperuser

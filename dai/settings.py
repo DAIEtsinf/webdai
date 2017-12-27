@@ -31,15 +31,20 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'web',
+    'accounts',
     'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'web',
-    'accounts',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -113,7 +118,35 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_PROFILE_MODULE = 'web.Perfil'
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
+# Add the 'allauth' backend to AUTHENTICATION_BACKEND and do not remove ModelBackend
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin and to ensure compatibility with other packages
+    'django.contrib.auth.backends.ModelBackend',
+    # 'allauth' specific authentication methods
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+
+# Custom allauth settings
+# Use email as the primary identifier
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+# Make email verification mandatory to avoid junk email accounts
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# Eliminate need to provide username, as it's a very old practice
+ACCOUNT_USERNAME_REQUIRED = False
+
+ALLOWED_DOMAIN = 'upv'
+ACCOUNT_ADAPTER = "accounts.my_adapter.OnlyUPVAdapter"
+
+#ACCOUNT_SIGNUP_FORM_CLASS = "accounts.forms.RegistroUserForm"
+
+LOGIN_REDIRECT_URL = "/"
 
 CKEDITOR_IMAGE_BACKEND  = 'pillow'
 CKEDITOR_UPLOAD_PATH = 'web/uploads/' # subida de archivos (MEDIA_ROOT + CKEDTIRO_UPLOAD_PATH)
@@ -121,6 +154,7 @@ CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.j
 
 #MEDIA_ROOT = is the path on the filesystem to the directory containing your static media.
 #MEDIA_URL = is the URL that makes the static media accessible over HTTP.
+
 
 #MEDIA_ROOT = 'media'
 #MEDIA_URL = '/'
@@ -137,6 +171,14 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': None,
     },
+    'resume': {
+        "removePlugins": "stylesheetparser",
+        'height': 200,
+        'width': 500,
+    }
 }
 
+# prueba
+
+handler404 = 'accounts.views.error404'
 
